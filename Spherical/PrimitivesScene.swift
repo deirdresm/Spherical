@@ -36,8 +36,9 @@ class PrimitivesScene : SCNScene {
 	var bigSphereNode : SCNNode?
 	let bigSphereRadius : CGFloat = 0.95 // radius
 	let littleSphereRadius : CGFloat = 0.05 // TODO: should calculate to adjust this
-	
-	var minH : Float = 1000.0
+	let cameraNode = SCNNode()          // the camera
+
+/*	var minH : Float = 1000.0
 	var minS : Float = 1000.0
 	var minB : Float = 1000.0
 	
@@ -52,8 +53,7 @@ class PrimitivesScene : SCNScene {
 	var maxX : Float = 0.0
 	var maxY : Float = 0.0
 	var maxZ : Float = 0.0
-
-
+*/
 	let migrationBlock: MigrationBlock = { migration, oldSchemaVersion in
 		//Leave the block empty
 	}
@@ -69,31 +69,57 @@ class PrimitivesScene : SCNScene {
 		
 		print(Realm.Configuration.defaultConfiguration.fileURL)
 
+		// add the container node containing all model elements
+		
+		var baseNode = SCNNode()            // the basic model-root
+		let keyLight = SCNLight()       ;   let keyLightNode = SCNNode()
+		let ambientLight = SCNLight()   ;   let ambientLightNode = SCNNode()
+		
+		rootNode.addChildNode(baseNode)
+		
+		cameraNode.camera = SCNCamera()
+		cameraNode.position = SCNVector3Make(0, 0, 5)
+		rootNode.addChildNode(cameraNode)
+		
+		keyLight.type = SCNLight.LightType.omni
+		keyLightNode.light = keyLight
+		keyLightNode.position = SCNVector3(x: 5, y: 5, z: 3)
+		cameraNode.addChildNode(keyLightNode)
+		
+		ambientLight.type = SCNLight.LightType.ambient
+
+		let shade: CGFloat = 0.40
+		ambientLight.color = UIColor(red: shade, green: shade, blue: shade, alpha: 1.0)
+		ambientLightNode.light = ambientLight
+		cameraNode.addChildNode(ambientLightNode)
+				
 		var shadowColors = realm.objects(ShadowColor.self)
 		
 		print("creating big sphere")
 		bigSphereNode = createBigSphere()
 		
-		print("attaching imported colors")
+		print("creating the camera node")
+//		createCameraNode()
+		
+		print("attaching imported colors to boundaries of big sphere")
 		for shadowColor in shadowColors {
 			attachColorToBigSphere(shadowColor)
 		}
 		
-		print("min/max hue \(minH), \(maxH)\nsat \(minS), \(maxS)\nbright \(minB), \(maxB)\nx \(minX), \(maxX)\ny \(minY), \(maxY)\nz \(minZ), \(maxZ)")
+//		print("min/max hue \(minH), \(maxH)\nsat \(minS), \(maxS)\nbright \(minB), \(maxB)\nx \(minX), \(maxX)\ny \(minY), \(maxY)\nz \(minZ), \(maxZ)")
 
-		
-		print("adding directional lighting")
-		addDirectionalLighting()
 	}
 
 	required init(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 	
 	func createBigSphere() -> SCNNode {
 		let sphereGeometry = SCNSphere(radius: bigSphereRadius)
 		bigSphereNode = SCNNode(geometry: sphereGeometry)
+		
+		bigSphereNode!.opacity = 0.0 // fully transparent
 		
 /*		let material = SCNMaterial()
 		material.diffuse.contents = UIImage(named: "8-Lime Time")
@@ -107,46 +133,84 @@ class PrimitivesScene : SCNScene {
 		
 		sphereGeometry.materials = [material]
 */
+		rootNode.addChildNode(bigSphereNode!)
+		
 		return bigSphereNode!
 		
 	}
 	
+/*	func createCameraNode() {
+		let cameraNode = SCNNode()
+		
+		cameraNode.camera = SCNCamera()
+		
+		rootNode.addChildNode(cameraNode)
+		
+		cameraNode.position = SCNVector3(x: 0, y: 0, z: 5)
+		
+		// add an omni light
+		
+		let lightNode = SCNNode()
+		lightNode.light = SCNLight()
+		lightNode.light!.type = SCNLight.LightType.omni
+		
+		lightNode.position = SCNVector3(x: 0, y: 0, z: 4)
+		
+		rootNode.addChildNode(lightNode)
+		
+		// add some ambient light
+		
+
+		let ambientLightNode = SCNNode()
+		ambientLightNode.light = SCNLight()
+		ambientLightNode.light!.type = SCNLight.LightType.ambient
+		
+		ambientLightNode.light!.color = UIColor.lightGray
+		
+//		rootNode.addChildNode(ambientLightNode)
+	}
+*/
+
 	func attachColorToBigSphere(_ shadowColor: ShadowColor) {
 		
 		// calculate geometry and position
 		let sphereGeometry = SCNSphere(radius: littleSphereRadius)
-		let sphereNode = SCNNode(geometry: sphereGeometry)
-		
-		sphereNode.position = calcPosition(shadowColor)
-		
+
 		// add color
 		
 		let material = SCNMaterial()
 		material.diffuse.contents = UIColor.init(hue: CGFloat(shadowColor.hue), saturation: CGFloat(shadowColor.saturation), brightness: CGFloat(shadowColor.brightness), alpha: 1.0)
+		material.lightingModel = .phong
+		sphereGeometry.materials = [material]
+
+		let sphereNode = SCNNode(geometry: sphereGeometry)
+		sphereNode.opacity = 1.0 // fully opaque
+		sphereNode.position = calcPosition(shadowColor)
 		
-		// add lighting
+		// add to big sphere
 		
 		bigSphereNode?.addChildNode(sphereNode)
 	}
 	
 	func calcPosition(_ shadowColor: ShadowColor) -> SCNVector3 {
+
 		
 		// shadowColor will have 0.0-1.0 for degrees x, y and z have no negatives, so use half a circle?,
 		// which I'll be ignoring for now until I get the rest sorted.
 		
 		// x, y, and z need to be in radians
 		// x is full circumference, so 2 pi radians. We have degrees / 360.
-		let x = Float(2.0 * shadowColor.hue) * Float.pi
+		let x = Float(shadowColor.hue) * Float(bigSphereRadius)
 		
 		// y is half circumference (as negative brightness makes no sense), so pi radians and we have degrees / 180.
 		
-		let y = Float(180.0 * shadowColor.brightness) * (Float.pi / 90.0)
+		let y = Float(2.0*(shadowColor.brightness-0.5)) * Float(bigSphereRadius)
 		
-		// z confuses me. It's saturation, so that's from 0.0 to 1.0 and much like y, except that 
+		// z confuses me. It's saturation, so that's from 0.0 to 1.0 and much like y, except that…nevermind
 
-		let z = Float(180.0 * shadowColor.saturation) * (Float.pi / 90.0)
+		let z = Float(shadowColor.saturation) * Float(bigSphereRadius)
 		
-		minX = x < minX ? Float(x) : minX
+/*		minX = x < minX ? Float(x) : minX
 		minY = y < minY ? Float(y) : minY
 		minZ = z < minZ ? Float(z) : minZ
 		
@@ -161,14 +225,14 @@ class PrimitivesScene : SCNScene {
 		maxH = CGFloat(shadowColor.hue) > maxH ? Float(shadowColor.hue) : maxH
 		maxS = CGFloat(shadowColor.saturation) > maxS ? Float(shadowColor.saturation) : maxS
 		maxB = CGFloat(shadowColor.brightness) > maxB ? Float(shadowColor.brightness) : maxB
-
+*/
 		let vector = SCNVector3(x: x, y: y, z: z)
 		print("color hue \(shadowColor.hue), sat \(shadowColor.saturation), bright \(shadowColor.brightness) = x \(x), y \(y), z \(z)")
 		
 		return vector
 	}
 
-	func drawSphere() {
+/*	func drawSphere() {
 		let sphereGeometry = SCNSphere(radius: 1.0)
 		let sphereNode = SCNNode(geometry: sphereGeometry)
 		
@@ -186,18 +250,9 @@ class PrimitivesScene : SCNScene {
 		material.diffuse.wrapT = SCNWrapMode.repeat
 
 		sphereGeometry.materials = [material]
-		addDirectionalLighting()
 		self.rootNode.addChildNode(sphereNode)
 	}
-
-	func addDirectionalLighting() {
-		
-		let directionalLight = SCNLight()
-		directionalLight.type = .directional
-		let directionalNode = SCNNode()
-		directionalNode.eulerAngles = SCNVector3Make(GLKMathDegreesToRadians(-130), GLKMathDegreesToRadians(0), GLKMathDegreesToRadians(35))
-		directionalNode.light = directionalLight
-		self.rootNode.addChildNode(directionalNode)
-	}
+*/
+	
 }
 
