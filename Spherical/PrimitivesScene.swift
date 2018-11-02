@@ -38,22 +38,6 @@ class PrimitivesScene : SCNScene {
 	let littleSphereRadius : CGFloat = 0.05 // TODO: should calculate to adjust this
 	let cameraNode = SCNNode()          // the camera
 
-/*	var minH : Float = 1000.0
-	var minS : Float = 1000.0
-	var minB : Float = 1000.0
-	
-	var maxH : Float = 0.0
-	var maxS : Float = 0.0
-	var maxB : Float = 0.0
-	
-	var minX : Float = 1000.0
-	var minY : Float = 1000.0
-	var minZ : Float = 1000.0
-	
-	var maxX : Float = 0.0
-	var maxY : Float = 0.0
-	var maxZ : Float = 0.0
-*/
 	let migrationBlock: MigrationBlock = { migration, oldSchemaVersion in
 		//Leave the block empty
 	}
@@ -104,6 +88,7 @@ class PrimitivesScene : SCNScene {
 		print("attaching imported colors to boundaries of big sphere")
 		for shadowColor in shadowColors {
 			attachColorToBigSphere(shadowColor)
+			break
 		}
 		
 //		print("min/max hue \(minH), \(maxH)\nsat \(minS), \(maxS)\nbright \(minB), \(maxB)\nx \(minX), \(maxX)\ny \(minY), \(maxY)\nz \(minZ), \(maxZ)")
@@ -121,56 +106,12 @@ class PrimitivesScene : SCNScene {
 		
 		bigSphereNode!.opacity = 0.0 // fully transparent
 		
-/*		let material = SCNMaterial()
-		material.diffuse.contents = UIImage(named: "8-Lime Time")
-		material.lightingModel = .phong
-		
-		// TODO: figure out a better way of calculating this
-		material.diffuse.contentsTransform = SCNMatrix4MakeScale(10.0, 10.0, 0)
-		
-		material.diffuse.wrapS = SCNWrapMode.repeat
-		material.diffuse.wrapT = SCNWrapMode.repeat
-		
-		sphereGeometry.materials = [material]
-*/
 		rootNode.addChildNode(bigSphereNode!)
 		
 		return bigSphereNode!
 		
 	}
 	
-/*	func createCameraNode() {
-		let cameraNode = SCNNode()
-		
-		cameraNode.camera = SCNCamera()
-		
-		rootNode.addChildNode(cameraNode)
-		
-		cameraNode.position = SCNVector3(x: 0, y: 0, z: 5)
-		
-		// add an omni light
-		
-		let lightNode = SCNNode()
-		lightNode.light = SCNLight()
-		lightNode.light!.type = SCNLight.LightType.omni
-		
-		lightNode.position = SCNVector3(x: 0, y: 0, z: 4)
-		
-		rootNode.addChildNode(lightNode)
-		
-		// add some ambient light
-		
-
-		let ambientLightNode = SCNNode()
-		ambientLightNode.light = SCNLight()
-		ambientLightNode.light!.type = SCNLight.LightType.ambient
-		
-		ambientLightNode.light!.color = UIColor.lightGray
-		
-//		rootNode.addChildNode(ambientLightNode)
-	}
-*/
-
 	func attachColorToBigSphere(_ shadowColor: ShadowColor) {
 		
 		// calculate geometry and position
@@ -180,12 +121,16 @@ class PrimitivesScene : SCNScene {
 		
 		let material = SCNMaterial()
 		material.diffuse.contents = UIColor.init(hue: CGFloat(shadowColor.hue), saturation: CGFloat(shadowColor.saturation), brightness: CGFloat(shadowColor.brightness), alpha: 1.0)
+
 		material.lightingModel = .phong
+
 		sphereGeometry.materials = [material]
 
 		let sphereNode = SCNNode(geometry: sphereGeometry)
 		sphereNode.opacity = 1.0 // fully opaque
 		sphereNode.position = calcPosition(shadowColor)
+		
+		print("little sphere position: X: \(sphereNode.position.x), y: \(sphereNode.position.y), z: \(sphereNode.position.z)")
 		
 		// add to big sphere
 		
@@ -210,24 +155,7 @@ class PrimitivesScene : SCNScene {
 
 		let z = Float(shadowColor.saturation) * Float(bigSphereRadius)
 		
-/*		minX = x < minX ? Float(x) : minX
-		minY = y < minY ? Float(y) : minY
-		minZ = z < minZ ? Float(z) : minZ
-		
-		maxX = x > maxX ? x : maxX
-		maxY = y > maxY ? y : maxY
-		maxZ = z > maxZ ? z : maxZ
-		
-		minH = CGFloat(shadowColor.hue) < minH ? Float(shadowColor.hue) : minH
-		minS = CGFloat(shadowColor.saturation) < minS ? Float(shadowColor.saturation) : minS
-		minB = CGFloat(shadowColor.brightness) < minB ? Float(shadowColor.brightness) : minB
-		
-		maxH = CGFloat(shadowColor.hue) > maxH ? Float(shadowColor.hue) : maxH
-		maxS = CGFloat(shadowColor.saturation) > maxS ? Float(shadowColor.saturation) : maxS
-		maxB = CGFloat(shadowColor.brightness) > maxB ? Float(shadowColor.brightness) : maxB
-*/
 		let vector = SCNVector3(x: x, y: y, z: z)
-		print("color hue \(shadowColor.hue), sat \(shadowColor.saturation), bright \(shadowColor.brightness) = x \(x), y \(y), z \(z)")
 		
 		return vector
 	}
