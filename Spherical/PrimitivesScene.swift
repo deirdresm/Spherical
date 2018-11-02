@@ -55,11 +55,8 @@ class PrimitivesScene : SCNScene {
 
 		// add the container node containing all model elements
 		
-		var baseNode = SCNNode()            // the basic model-root
 		let keyLight = SCNLight()       ;   let keyLightNode = SCNNode()
 		let ambientLight = SCNLight()   ;   let ambientLightNode = SCNNode()
-		
-		rootNode.addChildNode(baseNode)
 		
 		cameraNode.camera = SCNCamera()
 		cameraNode.position = SCNVector3Make(0, 0, 5)
@@ -81,17 +78,16 @@ class PrimitivesScene : SCNScene {
 		
 		print("creating big sphere")
 		bigSphereNode = createBigSphere()
+		rootNode.addChildNode(bigSphereNode!)
+		print(bigSphereNode?.geometry)
 		
-		print("creating the camera node")
+//		print("creating the camera node")
 //		createCameraNode()
 		
 		print("attaching imported colors to boundaries of big sphere")
 		for shadowColor in shadowColors {
 			attachColorToBigSphere(shadowColor)
-			break
 		}
-		
-//		print("min/max hue \(minH), \(maxH)\nsat \(minS), \(maxS)\nbright \(minB), \(maxB)\nx \(minX), \(maxX)\ny \(minY), \(maxY)\nz \(minZ), \(maxZ)")
 
 	}
 
@@ -102,9 +98,10 @@ class PrimitivesScene : SCNScene {
 	
 	func createBigSphere() -> SCNNode {
 		let sphereGeometry = SCNSphere(radius: bigSphereRadius)
+		sphereGeometry.firstMaterial!.diffuse.contents = UIColor.darkGray
 		bigSphereNode = SCNNode(geometry: sphereGeometry)
 		
-		bigSphereNode!.opacity = 0.0 // fully transparent
+//		bigSphereNode!.opacity = 0.5 // fully transparent
 		
 		rootNode.addChildNode(bigSphereNode!)
 		
@@ -119,18 +116,16 @@ class PrimitivesScene : SCNScene {
 
 		// add color
 		
-		let material = SCNMaterial()
-		material.diffuse.contents = UIColor.init(hue: CGFloat(shadowColor.hue), saturation: CGFloat(shadowColor.saturation), brightness: CGFloat(shadowColor.brightness), alpha: 1.0)
-
-		material.lightingModel = .phong
-
-		sphereGeometry.materials = [material]
+		sphereGeometry.firstMaterial!.diffuse.contents = UIColor.init(hue: CGFloat(shadowColor.hue), saturation: CGFloat(shadowColor.saturation), brightness: CGFloat(shadowColor.brightness), alpha: 1.0)
+		sphereGeometry.firstMaterial!.lightingModel = .phong
+		
+		// add geometry to sphere
 
 		let sphereNode = SCNNode(geometry: sphereGeometry)
 		sphereNode.opacity = 1.0 // fully opaque
 		sphereNode.position = calcPosition(shadowColor)
 		
-		print("little sphere position: X: \(sphereNode.position.x), y: \(sphereNode.position.y), z: \(sphereNode.position.z)")
+		print("little sphere position: X: \(sphereNode.position.x), y: \(sphereNode.position.y), z: \(sphereNode.position.z)\noriginally hue \(shadowColor.hue), bright \(shadowColor.brightness), sat \(shadowColor.saturation)")
 		
 		// add to big sphere
 		
@@ -145,16 +140,23 @@ class PrimitivesScene : SCNScene {
 		
 		// x, y, and z need to be in radians
 		// x is full circumference, so 2 pi radians. We have degrees / 360.
-		let x = Float(shadowColor.hue) * Float(bigSphereRadius)
-		
+		// let x = Float(shadowColor.hue) * Float(bigSphereRadius)
+//		let x = Float(360.0 * (shadowColor.hue - 0.5)) / (180 * Float.pi)
+		let x = Float(shadowColor.hue - 0.5)
+
 		// y is half circumference (as negative brightness makes no sense), so pi radians and we have degrees / 180.
 		
-		let y = Float(2.0*(shadowColor.brightness-0.5)) * Float(bigSphereRadius)
-		
+//		let y = Float(2.0*(shadowColor.brightness-0.5)) * Float(bigSphereRadius)
+//		let y = Float(shadowColor.brightness) * Float(bigSphereRadius)
+		let y = Float(shadowColor.brightness - 0.5)
+//		let y = Float(shadowColor.brightness) / Float.pi
+
 		// z confuses me. It's saturation, so that's from 0.0 to 1.0 and much like y, except that…nevermind
 
-		let z = Float(shadowColor.saturation) * Float(bigSphereRadius)
-		
+//		let z = Float(shadowColor.saturation) * Float(bigSphereRadius)
+//		let z = 2.0 + ((Float(shadowColor.saturation)-0.5) / Float.pi)
+		let z = 2.0 + ((Float(shadowColor.saturation)-0.5))
+
 		let vector = SCNVector3(x: x, y: y, z: z)
 		
 		return vector

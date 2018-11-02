@@ -19,7 +19,7 @@ class ViewController: UIViewController {
 		
 		scnView.backgroundColor = UIColor.black
 		
-		scnView.autoenablesDefaultLighting = false
+		scnView.autoenablesDefaultLighting = true
 		scnView.allowsCameraControl = true
 		
 		// add gesture recognizers here
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
 		scnView.scene = PrimitivesScene()
 
 		// view the scene through your camera
-		scnView.pointOfView = (scnView.scene as! PrimitivesScene).cameraNode
+//		scnView.pointOfView = (scnView.scene as! PrimitivesScene).cameraNode
 		
 	}
 
