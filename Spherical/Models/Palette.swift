@@ -39,7 +39,6 @@ class Palette : Object {
 	func set(maker: Maker, name: String) {
 		
 		self.name = name
-		
 		maker.palettes.append(self)
 	}
 }

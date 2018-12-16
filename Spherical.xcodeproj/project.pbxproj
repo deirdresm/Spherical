@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0960A5FE5B10ADCCE15A362B /* Pods_SphericalUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 925CCB37853803B151AEA76B /* Pods_SphericalUITests.framework */; };
+		3806A2EE2194B7A7008CE525 /* Colors.realm in Resources */ = {isa = PBXBuildFile; fileRef = 3806A2ED2194B7A7008CE525 /* Colors.realm */; };
 		380B3ABA218A8FFF00EC89E8 /* ShadowColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B3AB9218A8FFF00EC89E8 /* ShadowColor.swift */; };
 		380B3ABC218A915E00EC89E8 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B3ABB218A915E00EC89E8 /* Palette.swift */; };
 		380B3ABE218A917300EC89E8 /* Maker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B3ABD218A917300EC89E8 /* Maker.swift */; };
@@ -20,8 +21,9 @@
 		3863AC152182357E00B60381 /* SphericalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3863AC142182357E00B60381 /* SphericalTests.swift */; };
 		3863AC202182357E00B60381 /* SphericalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3863AC1F2182357E00B60381 /* SphericalUITests.swift */; };
 		3863AC2F218235DA00B60381 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3863AC2E218235DA00B60381 /* SceneKit.framework */; };
-		3863AC332182366D00B60381 /* PrimitivesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3863AC322182366D00B60381 /* PrimitivesScene.swift */; };
 		3888931C21855DA2004CBD69 /* JSONcolors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3888931B21855DA2004CBD69 /* JSONcolors.swift */; };
+		38E02A182192C6D40054ABD4 /* PrimitivesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */; };
+		38E54D6621C6C65D00996BAE /* Colors.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 38E54D6521C6C65D00996BAE /* Colors.sqlite */; };
 		40122A4F667B654044B06161 /* Pods_Spherical.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A110C087E15345AB6F2951B /* Pods_Spherical.framework */; };
 		4E3FA7D23783D2002C58E524 /* Pods_SphericalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4C01C22343CA4A0E62E8B7 /* Pods_SphericalTests.framework */; };
 /* End PBXBuildFile section */
@@ -46,16 +48,18 @@
 /* Begin PBXFileReference section */
 		0B72800CB50C5C8D2DEC1096 /* Pods-SphericalUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SphericalUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SphericalUITests/Pods-SphericalUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1FAA1C130EAFBD197309608D /* Pods-SphericalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SphericalTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SphericalTests/Pods-SphericalTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3806A2ED2194B7A7008CE525 /* Colors.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = Colors.realm; sourceTree = "<group>"; };
 		380B3AB9218A8FFF00EC89E8 /* ShadowColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowColor.swift; sourceTree = "<group>"; };
 		380B3ABB218A915E00EC89E8 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		380B3ABD218A917300EC89E8 /* Maker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maker.swift; sourceTree = "<group>"; };
 		380B3AC0218A91C500EC89E8 /* StorageLoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLoc.swift; sourceTree = "<group>"; };
+		3820468721AE4E0F00E6A004 /* Spherical.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spherical.entitlements; sourceTree = "<group>"; };
 		3846525621854A610069BAFA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3863ABFC2182357C00B60381 /* Spherical.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spherical.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3863ABFF2182357C00B60381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3863AC012182357C00B60381 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3863AC042182357C00B60381 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3863AC062182357E00B60381 /* Assets.xcassets */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = Assets.xcassets; sourceTree = "<group>"; };
+		3863AC062182357E00B60381 /* Assets.xcassets */ = {isa = PBXFileReference; explicitFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3863AC092182357E00B60381 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3863AC102182357E00B60381 /* SphericalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SphericalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3863AC142182357E00B60381 /* SphericalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalTests.swift; sourceTree = "<group>"; };
@@ -64,8 +68,9 @@
 		3863AC1F2182357E00B60381 /* SphericalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalUITests.swift; sourceTree = "<group>"; };
 		3863AC212182357E00B60381 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3863AC2E218235DA00B60381 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
-		3863AC322182366D00B60381 /* PrimitivesScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimitivesScene.swift; sourceTree = "<group>"; };
 		3888931B21855DA2004CBD69 /* JSONcolors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONcolors.swift; sourceTree = "<group>"; };
+		38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimitivesScene.swift; sourceTree = "<group>"; };
+		38E54D6521C6C65D00996BAE /* Colors.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Colors.sqlite; sourceTree = SOURCE_ROOT; };
 		3A2E07D80B7F69C2CCE135B8 /* Pods-Spherical.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spherical.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spherical/Pods-Spherical.debug.xcconfig"; sourceTree = "<group>"; };
 		5A110C087E15345AB6F2951B /* Pods_Spherical.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spherical.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6210021194684338F046BAB8 /* Pods-SphericalUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SphericalUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SphericalUITests/Pods-SphericalUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -104,6 +109,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38005F38219283CF00DDDCA3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3863AC012182357C00B60381 /* ViewController.swift */,
+				38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		380B3ABF218A918D00EC89E8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,15 +154,17 @@
 		3863ABFE2182357C00B60381 /* Spherical */ = {
 			isa = PBXGroup;
 			children = (
+				3820468721AE4E0F00E6A004 /* Spherical.entitlements */,
+				38005F38219283CF00DDDCA3 /* Controllers */,
 				380B3ABF218A918D00EC89E8 /* Models */,
 				3863ABFF2182357C00B60381 /* AppDelegate.swift */,
-				3863AC012182357C00B60381 /* ViewController.swift */,
-				3863AC322182366D00B60381 /* PrimitivesScene.swift */,
 				3888931B21855DA2004CBD69 /* JSONcolors.swift */,
 				3863AC032182357C00B60381 /* Main.storyboard */,
 				3863AC062182357E00B60381 /* Assets.xcassets */,
 				3863AC082182357E00B60381 /* LaunchScreen.storyboard */,
 				3846525621854A610069BAFA /* Info.plist */,
+				3806A2ED2194B7A7008CE525 /* Colors.realm */,
+				38E54D6521C6C65D00996BAE /* Colors.sqlite */,
 			);
 			path = Spherical;
 			sourceTree = "<group>";
@@ -267,6 +283,11 @@
 				TargetAttributes = {
 					3863ABFB2182357C00B60381 = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					3863AC0F2182357E00B60381 = {
 						CreatedOnToolsVersion = 10.0;
@@ -304,6 +325,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3863AC0A2182357E00B60381 /* LaunchScreen.storyboard in Resources */,
+				3806A2EE2194B7A7008CE525 /* Colors.realm in Resources */,
+				38E54D6621C6C65D00996BAE /* Colors.sqlite in Resources */,
 				38260B32218A6A6F007F56B5 /* Assets.xcassets in Resources */,
 				3863AC052182357C00B60381 /* Main.storyboard in Resources */,
 			);
@@ -430,7 +453,7 @@
 				380B3ABE218A917300EC89E8 /* Maker.swift in Sources */,
 				380B3ABA218A8FFF00EC89E8 /* ShadowColor.swift in Sources */,
 				380B3AC1218A91C500EC89E8 /* StorageLoc.swift in Sources */,
-				3863AC332182366D00B60381 /* PrimitivesScene.swift in Sources */,
+				38E02A182192C6D40054ABD4 /* PrimitivesScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,15 +629,18 @@
 			baseConfigurationReference = 3A2E07D80B7F69C2CCE135B8 /* Pods-Spherical.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3LH6DD65LK;
 				INFOPLIST_FILE = Spherical/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.Spherical;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -625,15 +651,18 @@
 			baseConfigurationReference = C0A4B3E860469F339C3CB262 /* Pods-Spherical.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3LH6DD65LK;
 				INFOPLIST_FILE = Spherical/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.Spherical;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

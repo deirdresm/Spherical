@@ -6,6 +6,9 @@
 //  Copyright © 2018 Deirdre Saoirse Moen. All rights reserved.
 //
 
+// Note: the export was working before I hacked and slashed at it, but the import was an issue, so
+// I stopped using it for this project. Here as vestigial, basically.
+
 import Foundation
 
 struct JSONcolors: Codable {
