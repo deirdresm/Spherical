@@ -13,12 +13,31 @@
         <fetchedProperty name="shadowsInPaletteOrder" optional="YES" syncable="YES">
             <fetchRequest name="fetchedPropertyFetchRequest" entity="EyePalette"/>
         </fetchedProperty>
+        <fetchIndex name="byUUID">
+            <fetchIndexElement property="uuid" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byMakerAndName">
+            <fetchIndexElement property="maker" type="Binary" order="ascending"/>
+            <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byShadowColors">
+            <fetchIndexElement property="shadows" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="Maker" representedClassName=".Maker" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="predictedRating" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="eyePalettes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EyePalette" inverseName="maker" inverseEntity="EyePalette" syncable="YES"/>
+        <fetchIndex name="byUUID">
+            <fetchIndexElement property="uuid" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byName">
+            <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPalettes">
+            <fetchIndexElement property="eyePalettes" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="ShadowColor" representedClassName=".ShadowColor" syncable="YES">
         <attribute name="boughtOn" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -40,6 +59,17 @@
         <attribute name="y" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="z" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="eyePalette" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EyePalette" inverseName="shadows" inverseEntity="EyePalette" syncable="YES"/>
+        <fetchIndex name="byUUID">
+            <fetchIndexElement property="uuid" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPalettePositionName">
+            <fetchIndexElement property="eyePalette" type="Binary" order="ascending"/>
+            <fetchIndexElement property="position" type="Binary" order="ascending"/>
+            <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPredictedRating">
+            <fetchIndexElement property="predictedRating" type="Binary" order="descending"/>
+        </fetchIndex>
     </entity>
     <fetchRequest name="ShadowNilColor" entity="ShadowColor" predicateString="x == 0 OR y == 0 OR z == 0 OR hue == 0 OR saturation == 0 OR brightness == 0 OR x == 0 OR y == 0 OR z == 0 OR hue == 0 OR saturation == 0 OR brightness == 0"/>
     <elements>
