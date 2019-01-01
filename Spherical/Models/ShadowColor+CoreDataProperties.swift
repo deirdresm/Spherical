@@ -7,9 +7,8 @@
 //  This file was automatically generated and should not be edited.
 //
 
-import Foundation
+import UIKit
 import CoreData
-import AppKit
 
 
 extension ShadowColor {
@@ -33,7 +32,7 @@ extension ShadowColor {
     @NSManaged public var x: Double
     @NSManaged public var y: Double
     @NSManaged public var z: Double
-	@NSManaged public var nsColor: NSColor
+	@NSManaged public var nsColor: UIColor
     @NSManaged public var eyePalette: EyePalette?
 
 }

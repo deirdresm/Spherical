@@ -8,7 +8,6 @@
 
 import Foundation
 import SceneKit
-//import RealmSwift
 import CoreData
 
 class PrimitivesScene : SCNScene {
@@ -19,25 +18,29 @@ class PrimitivesScene : SCNScene {
 	let bigSphereRadius : CGFloat = 2.0 // radius
 	let littleSphereRadius : CGFloat = 0.075 // TODO: should calculate to adjust this
 	let cameraNode = SCNNode()          // the camera
+	private var shadowColors: [NSManagedObject] = []
 
-	let migrationBlock: MigrationBlock = { migration, oldSchemaVersion in
-		//Leave the block empty
-	}
-
-	lazy var realm:Realm = {
-		
-		let seedFileURL = Bundle.main.url(forResource: "Colors", withExtension: "realm")
-//		let config = Realm.Configuration(fileURL: seedFileURL, readOnly: true)
-		let config = Realm.Configuration(fileURL: seedFileURL, readOnly: true, schemaVersion: 4, migrationBlock: migrationBlock)
-		Realm.Configuration.defaultConfiguration = config
-		return try! Realm()
-	}()
-	
 	override init() {
 		super.init()
 		
-		print(Realm.Configuration.defaultConfiguration.fileURL)
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+			return
+		}
+		
+		let moc = appDelegate.persistentContainer.viewContext
 
+		let shadowFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ShadowColor")
+		let nameSort = NSSortDescriptor(key: "name", ascending: true)
+		
+		shadowFetchRequest.sortDescriptors = [nameSort]
+		
+		do {
+			self.shadowColors = try moc.fetch(shadowFetchRequest)
+		} catch let error as NSError {
+			print("Could not fetch. \(error), \(error.userInfo)")
+		}
+
+		
 		// add the container node containing all model elements
 		
 /*		let keyLight = SCNLight()       ;   let keyLightNode = SCNNode()
@@ -61,7 +64,6 @@ class PrimitivesScene : SCNScene {
 		ambientLightNode.light = ambientLight
 		cameraNode.addChildNode(ambientLightNode)
 */
-		var shadowColors = realm.objects(ShadowColor.self)
 		print("creating big sphere")
 //		bigSphereNode = createBigSphere()
 		bigSphereNode = rootNode
@@ -73,7 +75,7 @@ class PrimitivesScene : SCNScene {
 		
 		print("attaching imported colors to boundaries of big sphere")
 		for shadowColor in shadowColors {
-			attachColorToBigSphere(shadowColor)
+			attachColorToBigSphere(shadowColor as! ShadowColor)
 		}
 
 	}
