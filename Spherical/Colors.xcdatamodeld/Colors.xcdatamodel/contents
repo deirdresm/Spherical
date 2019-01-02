@@ -7,7 +7,7 @@
         <attribute name="predictedRating" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="pricePaid" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" syncable="YES"/>
         <relationship name="maker" maxCount="1" deletionRule="Nullify" destinationEntity="Maker" inverseName="eyePalettes" inverseEntity="Maker" syncable="YES"/>
         <relationship name="shadows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ShadowColor" inverseName="eyePalette" inverseEntity="ShadowColor" syncable="YES"/>
         <fetchedProperty name="shadowsInPaletteOrder" optional="YES" syncable="YES">
@@ -27,7 +27,7 @@
     <entity name="Maker" representedClassName=".Maker" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="predictedRating" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" syncable="YES"/>
         <relationship name="eyePalettes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EyePalette" inverseName="maker" inverseEntity="EyePalette" syncable="YES"/>
         <fetchIndex name="byUUID">
             <fetchIndexElement property="uuid" type="Binary" order="ascending"/>
@@ -45,7 +45,7 @@
         <attribute name="cropFile" optional="YES" attributeType="URI" syncable="YES"/>
         <attribute name="hue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="imageFile" optional="YES" attributeType="URI" syncable="YES"/>
-        <attribute name="isCalibrated" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isCalibrated" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastWorn" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="nsColor" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -54,7 +54,7 @@
         <attribute name="pricePaid" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="saturation" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" syncable="YES"/>
         <attribute name="x" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="y" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="z" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
