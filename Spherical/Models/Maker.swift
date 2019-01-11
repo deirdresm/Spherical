@@ -1,5 +1,5 @@
 //
-//  Maker+CoreDataProperties.swift
+//  Maker+CoreDataClass.swift
 //  
 //
 //  Created by Deirdre Saoirse Moen on 11/30/18.
@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 
-extension Maker {
+public class Maker: NSManagedObject {
 	
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<Maker> {
 		return NSFetchRequest<Maker>(entityName: "Maker")
@@ -20,12 +20,30 @@ extension Maker {
 	@NSManaged public var name: String
 	@NSManaged public var predictedRating: Double
 	@NSManaged public var eyePalettes: NSSet?
+	@NSManaged public var uuid: String
 	
-}
+//	func setUniqueidentifier(_ uniqueidentifier: String) {
+//		self.uniqueidentifier = uniqueidentifier
+//	}
 
-// MARK: Generated accessors for eyePalettes
-extension Maker {
+	func shadowsByPaletteOrderName() -> NSMutableArray? {
+		
+		let palettes = sortedPalettes()
+		var shadows = NSMutableArray()
+		
+		for palette in palettes {
+			shadows.addObjects(from: palette.sortedShadows())
+		}
+		
+		return shadows
+	}
 	
+	func sortedPalettes() -> [EyePalette] {
+		let sortNameDescriptor = NSSortDescriptor.init(key: "name", ascending: true)
+		
+		return (self.eyePalettes)?.sortedArray(using: [sortNameDescriptor]) as! [EyePalette]
+	}
+
 	@objc(addEyePalettesObject:)
 	@NSManaged public func addToEyePalettes(_ value: EyePalette)
 	
@@ -37,6 +55,4 @@ extension Maker {
 	
 	@objc(removeEyePalettes:)
 	@NSManaged public func removeFromEyePalettes(_ values: NSSet)
-	
 }
-

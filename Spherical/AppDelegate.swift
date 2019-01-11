@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		moc.persistentStoreCoordinator = psc
 		
-		let storeURL = Bundle.main.url(forResource: "Colors", withExtension:"sqlite")
+		let storeURL = Bundle.main.url(forResource: "Colors_0.06", withExtension:"sqlite")
 		
 		do {
 			try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: [NSReadOnlyPersistentStoreOption: true])
@@ -114,7 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		moc.persistentStoreCoordinator = psc
 		
-		let storeURL = Bundle.main.url(forResource: "Colors", withExtension:"sqlite")
+		let storeURL = Bundle.main.url(forResource: "Colors_0.06", withExtension:"sqlite")
 		
 		do {
 			try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: [NSReadOnlyPersistentStoreOption: true])
