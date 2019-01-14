@@ -1,5 +1,5 @@
 //
-//  EyePalette+CoreDataClass.swift
+//  EyePalette.swift
 //  
 //
 //  Created by Deirdre Saoirse Moen on 11/30/18.

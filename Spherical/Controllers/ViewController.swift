@@ -68,5 +68,14 @@ class ViewController: UIViewController {
 		makerNameLabel.text = name
 	}
 
+	
+	override var prefersStatusBarHidden: Bool {
+		return true
+	}
+	
+	override var shouldAutorotate: Bool {
+		return true
+	}
+	
 }
 

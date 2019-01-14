@@ -19,6 +19,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 	var mainSphereNode : SCNNode?
 	let mainSphereRadius : CGFloat = 2.0 // radius
 	let littleSphereRadius : CGFloat = 0.075 // TODO: should calculate to adjust this
+	let makerSphereRadius : CGFloat = 0.000075 // TODO: should calculate to adjust this
 	let cameraNode = SCNNode()          // the camera
 	private var shadowColors: [NSManagedObject] = []
 	
@@ -71,6 +72,16 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		print("creating big sphere")
 //		mainSphereNode = createBigSphere()
 		mainSphereNode = rootNode
+		
+		
+		let rotationAnimation = CABasicAnimation(keyPath: "rotation")
+
+		// Animate one complete revolution around the node's Y axis.
+		rotationAnimation.toValue =  NSValue(scnVector4: SCNVector4(0, 1, 0, 2 * Double.pi))
+		rotationAnimation.duration = 5.0 // One revolution in five seconds.
+		rotationAnimation.repeatCount = .greatestFiniteMagnitude // Repeat the animation forever.
+		rootNode.addAnimation(rotationAnimation, forKey: "rotation") // Attach the animation to the node to start it.
+
 //		rootNode.addChildNode(mainSphereNode!)
 ///		print(rootNode.geometry)
 		
@@ -79,7 +90,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		
 		print("attaching imported colors to boundaries of big sphere")
 		for shadowColor in shadowColors {
-			attachColorToBigSphere(shadowColor as! ShadowColor)
+			attachColorToMaker(shadowColor as! ShadowColor)
 		}
 
 	}
@@ -103,7 +114,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		if let sphereNode = makerDict[name] {
 			return sphereNode as! SCNNode	 // it's already added to the main node
 		} else {
-			let sphereGeometry = SCNSphere(radius: littleSphereRadius)
+			let sphereGeometry = SCNSphere(radius: makerSphereRadius)
 			let sphereNode = SCNNode(geometry: sphereGeometry)
 			sphereNode.opacity = 1.0 // fully opaque
 			sphereNode.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
@@ -118,7 +129,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 	// I didn't realize that making that sphere transparent would also make chld nodes
 	// transparent, but that makes sense. So we change it up.
 	
-	func attachColorToBigSphere(_ shadowColor: ShadowColor) {
+	func attachColorToMaker(_ shadowColor: ShadowColor) {
 		
 		// calculate geometry and position
 		let sphereGeometry = SCNSphere(radius: littleSphereRadius)
@@ -131,41 +142,29 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		// add geometry to sphere
 
 		let sphereNode = SCNNode(geometry: sphereGeometry)
-		sphereNode.opacity = 1.0 // fully opaque
+		sphereNode.opacity = 1.0 // fully transparent (at the start)
 		sphereNode.position = calcPosition(shadowColor)
 		
-		print("little sphere position: X: \(sphereNode.position.x), y: \(sphereNode.position.y), z: \(sphereNode.position.z)\noriginally hue \(shadowColor.hue), bright \(shadowColor.brightness), sat \(shadowColor.saturation)")
+//		print("little sphere position: X: \(sphereNode.position.x), y: \(sphereNode.position.y), z: \(sphereNode.position.z)\noriginally hue \(shadowColor.hue), bright \(shadowColor.brightness), sat \(shadowColor.saturation)")
 		
 		// add to maker sphere
 		
 		let makerNode = findMakerNode(shadowColor)
-		
 		makerNode.addChildNode(sphereNode)
 	}
 	
 	func calcPosition(_ shadowColor: ShadowColor) -> SCNVector3 {
 
+		// precalculated when added, but that could change if desired
 		
-		// shadowColor will have 0.0-1.0 for degrees x, y and z have no negatives, so use half a circle
-//
-//		// x, y, and z need to be converted to radians first
-//
-//		let radius : Float = Float(bigSphereRadius) + (1.25 * Float(shadowColor.saturation)) - 0.5
-//
-//		let sRadians = 2.0 * Float(shadowColor.hue * Double.pi)
-//		let tRadians = Float(shadowColor.brightness * Double.pi)
-//
-//		let x = Float(radius) * cos(sRadians) * sin(tRadians)
-//		let y = Float(radius) * cos(tRadians)
-//		let z = Float(radius) * sin(sRadians) * sin(tRadians)
-
 		let vector = SCNVector3(x: Float(shadowColor.x), y: Float(shadowColor.y), z: Float(shadowColor.z))
 		
 		return vector
 	}
 	
-	func animateSphere() {
-		
+	
+	func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+		// Called before each frame is rendered
 	}
 
 
