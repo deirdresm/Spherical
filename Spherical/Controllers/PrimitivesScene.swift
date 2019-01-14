@@ -10,15 +10,19 @@ import Foundation
 import SceneKit
 import CoreData
 
-class PrimitivesScene : SCNScene {
+class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 
-//	var jsonColors : [JSONcolors] = []
+	//	let sceneRenderer: SCNSceneRenderer // TODO: for later animation
+	
+	var vc : UIViewController?
 
-	var bigSphereNode : SCNNode?
-	let bigSphereRadius : CGFloat = 2.0 // radius
+	var mainSphereNode : SCNNode?
+	let mainSphereRadius : CGFloat = 2.0 // radius
 	let littleSphereRadius : CGFloat = 0.075 // TODO: should calculate to adjust this
 	let cameraNode = SCNNode()          // the camera
 	private var shadowColors: [NSManagedObject] = []
+	
+	var makerDict : NSMutableDictionary = [:]
 
 	override init() {
 		super.init()
@@ -65,10 +69,10 @@ class PrimitivesScene : SCNScene {
 		cameraNode.addChildNode(ambientLightNode)
 */
 		print("creating big sphere")
-//		bigSphereNode = createBigSphere()
-		bigSphereNode = rootNode
-//		rootNode.addChildNode(bigSphereNode!)
-		print(rootNode.geometry)
+//		mainSphereNode = createBigSphere()
+		mainSphereNode = rootNode
+//		rootNode.addChildNode(mainSphereNode!)
+///		print(rootNode.geometry)
 		
 //		print("creating the camera node")
 //		createCameraNode()
@@ -83,6 +87,31 @@ class PrimitivesScene : SCNScene {
 	// TODO: required initializer that should be fleshed out
 	required init(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	func getMakerName(sc: ShadowColor) -> String {
+		return sc.eyePalette!.maker!.name
+	}
+	
+	// adds maker node to dictionary if it doesn't exist, then adds it to the main node.
+	// purpose: to be able to animate by maker/palette
+	
+	func findMakerNode(_ sc: ShadowColor) -> SCNNode {
+		
+		let name = getMakerName(sc: sc)
+		
+		if let sphereNode = makerDict[name] {
+			return sphereNode as! SCNNode	 // it's already added to the main node
+		} else {
+			let sphereGeometry = SCNSphere(radius: littleSphereRadius)
+			let sphereNode = SCNNode(geometry: sphereGeometry)
+			sphereNode.opacity = 1.0 // fully opaque
+			sphereNode.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
+			mainSphereNode?.addChildNode(sphereNode)
+			makerDict[name] = sphereNode
+			
+			return sphereNode
+		}
 	}
 
 	// the "big sphere" here is virtual: essentially the colors are being added to a sphere.
@@ -107,9 +136,11 @@ class PrimitivesScene : SCNScene {
 		
 		print("little sphere position: X: \(sphereNode.position.x), y: \(sphereNode.position.y), z: \(sphereNode.position.z)\noriginally hue \(shadowColor.hue), bright \(shadowColor.brightness), sat \(shadowColor.saturation)")
 		
-		// add to big sphere
+		// add to maker sphere
 		
-		bigSphereNode?.addChildNode(sphereNode)
+		let makerNode = findMakerNode(shadowColor)
+		
+		makerNode.addChildNode(sphereNode)
 	}
 	
 	func calcPosition(_ shadowColor: ShadowColor) -> SCNVector3 {
@@ -131,6 +162,10 @@ class PrimitivesScene : SCNScene {
 		let vector = SCNVector3(x: Float(shadowColor.x), y: Float(shadowColor.y), z: Float(shadowColor.z))
 		
 		return vector
+	}
+	
+	func animateSphere() {
+		
 	}
 
 

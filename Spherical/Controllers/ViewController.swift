@@ -13,8 +13,9 @@ class ViewController: UIViewController {
 	
 	@IBOutlet var scnView: SCNView!
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()
+	@IBOutlet weak var makerNameLabel: UILabel!
+	
+	fileprivate func setupScene() {
 		// Do any additional setup after loading the view, typically from a nib.
 		
 		scnView.backgroundColor = UIColor.black
@@ -29,7 +30,7 @@ class ViewController: UIViewController {
 		let ambientLight = SCNLight()
 		let ambientLightNode = SCNNode()
 		let cameraNode = SCNNode()          // the camera
-
+		
 		cameraNode.camera = SCNCamera()
 		cameraNode.position = SCNVector3Make(0, 0, 12)
 		
@@ -47,12 +48,24 @@ class ViewController: UIViewController {
 		ambientLightNode.light = ambientLight
 		cameraNode.addChildNode(ambientLightNode)
 		scnView.pointOfView?.addChildNode(cameraNode)
-
+		
 		// add gesture recognizers here
-
+		
 		// add colors (from database) to the scene
 		scnView.scene = PrimitivesScene()
 		
+		// TODO: fugly
+		(scnView!.scene! as! PrimitivesScene).vc = self
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		setupScene()
+
+	}
+	
+	func setMakerName(_ name: String) {
+		makerNameLabel.text = name
 	}
 
 }

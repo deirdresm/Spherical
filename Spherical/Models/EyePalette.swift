@@ -29,6 +29,9 @@ public class EyePalette: NSManagedObject {
 	@NSManaged public var shadows: NSSet?
 	@NSManaged public var uuid: String
 	
+	// Not setting UUID in this app because this data repository is read only at this time.
+	// TODO: Integrate Ensembles so that it can be read/write.
+	
 //	func setUniqueidentifier(_ uniqueidentifier: String) {
 //		self.uniqueidentifier = uniqueidentifier
 //	}

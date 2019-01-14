@@ -24,7 +24,6 @@
 		38914AFA21E7FA520034F83F /* Colors_0.06.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF721E7FA510034F83F /* Colors_0.06.sqlite */; };
 		38914AFB21E7FA520034F83F /* Colors_0.06.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF821E7FA520034F83F /* Colors_0.06.sqlite-shm */; };
 		38E02A182192C6D40054ABD4 /* PrimitivesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */; };
-		38E54D7521C6DAAC00996BAE /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E54D7421C6DAAB00996BAE /* ImageProcessor.swift */; };
 		38E54D7721C7613100996BAE /* DeirdreFaveColors.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 38E54D7321C6DA6100996BAE /* DeirdreFaveColors.mlmodel */; };
 		40122A4F667B654044B06161 /* Pods_Spherical.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A110C087E15345AB6F2951B /* Pods_Spherical.framework */; };
 		4E3FA7D23783D2002C58E524 /* Pods_SphericalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4C01C22343CA4A0E62E8B7 /* Pods_SphericalTests.framework */; };
@@ -74,7 +73,6 @@
 		38914AF821E7FA520034F83F /* Colors_0.06.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Colors_0.06.sqlite-shm"; sourceTree = "<group>"; };
 		38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimitivesScene.swift; sourceTree = "<group>"; };
 		38E54D7321C6DA6100996BAE /* DeirdreFaveColors.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DeirdreFaveColors.mlmodel; sourceTree = "<group>"; };
-		38E54D7421C6DAAB00996BAE /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		3A2E07D80B7F69C2CCE135B8 /* Pods-Spherical.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spherical.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spherical/Pods-Spherical.debug.xcconfig"; sourceTree = "<group>"; };
 		5A110C087E15345AB6F2951B /* Pods_Spherical.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spherical.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6210021194684338F046BAB8 /* Pods-SphericalUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SphericalUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SphericalUITests/Pods-SphericalUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 				38914AEF21E7F9E90034F83F /* EyePalette.swift */,
 				38914AEE21E7F9E90034F83F /* Maker.swift */,
 				38914AED21E7F9E80034F83F /* ShadowColor.swift */,
-				38E54D7421C6DAAB00996BAE /* ImageProcessor.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -455,7 +452,6 @@
 			files = (
 				38914AF021E7F9E90034F83F /* ShadowColor.swift in Sources */,
 				3863AC022182357C00B60381 /* ViewController.swift in Sources */,
-				38E54D7521C6DAAC00996BAE /* ImageProcessor.swift in Sources */,
 				38914AF121E7F9E90034F83F /* Maker.swift in Sources */,
 				38E54D7721C7613100996BAE /* DeirdreFaveColors.mlmodel in Sources */,
 				3863AC002182357C00B60381 /* AppDelegate.swift in Sources */,

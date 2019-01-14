@@ -56,6 +56,13 @@ public class ShadowColor: NSManagedObject {
 	@NSManaged public var temptaliaRating: Int16
 	
 	
+	// Not setting UUID in this app because this data repository is read only at this time.
+	// TODO: Integrate Ensembles so that it can be read/write.
+	
+	//	func setUniqueidentifier(_ uniqueidentifier: String) {
+	//		self.uniqueidentifier = uniqueidentifier
+	//	}
+
 	/* print the name of the maker, palette, and shadow */
 	
 	func fullName() -> String {
@@ -108,30 +115,6 @@ public class ShadowColor: NSManagedObject {
 		}
 		
 		return true // TODO: I think, must ponder more
-		
-	}
-	
-	func predictFavorites(image: CIImage) {	// cropped image file
-		
-		let model = DeirdreFaveColors()
-		
-		if let cgImage = ImageProcessor.convertCIImageToCGImage(inputImage: image) {
-			if let pixBuf = ImageProcessor.pixelBuffer(forImage: cgImage) {
-				guard let results = try? model.prediction(image: pixBuf) else {fatalError("Unexpected runtime error")}
-				
-				self.predictedRating = 10.0 * (results.classLabelProbs["Love"] ?? 0.0)
-				self.predictedRating += 5.0 * (results.classLabelProbs["Like"] ?? 0.0)
-				self.predictedRating += 1.0 * (results.classLabelProbs["Dislike"] ?? 0.0)
-			}
-		}
-				
-	}
-
-	func sortHSVbyMaker(_ maker : Maker) {
-		
-	}
-	
-	func sortByPaletteAndPosition(_ maker : Maker) {
 		
 	}
 
