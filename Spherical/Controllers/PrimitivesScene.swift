@@ -45,50 +45,22 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 			print("Could not fetch. \(error), \(error.userInfo)")
 		}
 
-		
-		// add the container node containing all model elements
-		
-/*		let keyLight = SCNLight()       ;   let keyLightNode = SCNNode()
-		let ambientLight = SCNLight()   ;   let ambientLightNode = SCNNode()
-		
-		cameraNode.camera = SCNCamera()
-		cameraNode.position = SCNVector3Make(0, 0, 10)
-		rootNode.addChildNode(cameraNode)
-		
-		keyLight.type = SCNLight.LightType.omni
-		keyLightNode.light = keyLight
-		keyLightNode.position = SCNVector3(x: 5, y: 5, z: 3)
-		
-		keyLightNode.constraints = []
-		cameraNode.addChildNode(keyLightNode)
-		
-		ambientLight.type = SCNLight.LightType.ambient
-
-		let shade: CGFloat = 0.40
-		ambientLight.color = UIColor(red: shade, green: shade, blue: shade, alpha: 1.0)
-		ambientLightNode.light = ambientLight
-		cameraNode.addChildNode(ambientLightNode)
-*/
-		print("creating big sphere")
-//		mainSphereNode = createBigSphere()
 		mainSphereNode = rootNode
 		
+		// rotate the root node
 		
 		let rotationAnimation = CABasicAnimation(keyPath: "rotation")
 
 		// Animate one complete revolution around the node's Y axis.
-		rotationAnimation.toValue =  NSValue(scnVector4: SCNVector4(0, 1, 0, 2 * Double.pi))
+		rotationAnimation.toValue =  NSValue(scnVector4: SCNVector4(0, -1, 0, 2 * Double.pi))
 		rotationAnimation.duration = 5.0 // One revolution in five seconds.
 		rotationAnimation.repeatCount = .greatestFiniteMagnitude // Repeat the animation forever.
 		rootNode.addAnimation(rotationAnimation, forKey: "rotation") // Attach the animation to the node to start it.
+		
+		// Attach colors to the main node via Maker. Note that there's a join in the middle
+		// not used in this app. Adding them this way will allow the app to animate by maker,
+		// which was my goal here.
 
-//		rootNode.addChildNode(mainSphereNode!)
-///		print(rootNode.geometry)
-		
-//		print("creating the camera node")
-//		createCameraNode()
-		
-		print("attaching imported colors to boundaries of big sphere")
 		for shadowColor in shadowColors {
 			attachColorToMaker(shadowColor as! ShadowColor)
 		}
@@ -100,12 +72,17 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	// Have to reach through the middle relation to get the maker name from the shadow color instance.
+	
 	func getMakerName(sc: ShadowColor) -> String {
 		return sc.eyePalette!.maker!.name
 	}
 	
 	// adds maker node to dictionary if it doesn't exist, then adds it to the main node.
-	// purpose: to be able to animate by maker/palette
+	// returns the found or created sphereNode.
+	
+	// TODO: it might be cool at some later time to make the maker node's location the median
+	// point between all the colors. Not sure what I'd do with that, but it's an interesting idea.
 	
 	func findMakerNode(_ sc: ShadowColor) -> SCNNode {
 		
@@ -115,6 +92,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 			return sphereNode as! SCNNode	 // it's already added to the main node
 		} else {
 			let sphereGeometry = SCNSphere(radius: makerSphereRadius)
+			sphereGeometry.firstMaterial!.diffuse.contents = UIColor.black
 			let sphereNode = SCNNode(geometry: sphereGeometry)
 			sphereNode.opacity = 1.0 // fully opaque
 			sphereNode.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
@@ -145,8 +123,6 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		sphereNode.opacity = 1.0 // fully transparent (at the start)
 		sphereNode.position = calcPosition(shadowColor)
 		
-//		print("little sphere position: X: \(sphereNode.position.x), y: \(sphereNode.position.y), z: \(sphereNode.position.z)\noriginally hue \(shadowColor.hue), bright \(shadowColor.brightness), sat \(shadowColor.saturation)")
-		
 		// add to maker sphere
 		
 		let makerNode = findMakerNode(shadowColor)
@@ -155,13 +131,14 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 	
 	func calcPosition(_ shadowColor: ShadowColor) -> SCNVector3 {
 
-		// precalculated when added, but that could change if desired
+		// precalculated when color was added to CoreData, but that could change if desired
 		
 		let vector = SCNVector3(x: Float(shadowColor.x), y: Float(shadowColor.y), z: Float(shadowColor.z))
 		
 		return vector
 	}
 	
+	// TODO: Not sure if this is the right place, but need a place for animating the makers.
 	
 	func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 		// Called before each frame is rendered

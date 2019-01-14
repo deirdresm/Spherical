@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -24,7 +24,6 @@
 		38914AFA21E7FA520034F83F /* Colors_0.06.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF721E7FA510034F83F /* Colors_0.06.sqlite */; };
 		38914AFB21E7FA520034F83F /* Colors_0.06.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF821E7FA520034F83F /* Colors_0.06.sqlite-shm */; };
 		38E02A182192C6D40054ABD4 /* PrimitivesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */; };
-		38E54D7721C7613100996BAE /* DeirdreFaveColors.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 38E54D7321C6DA6100996BAE /* DeirdreFaveColors.mlmodel */; };
 		40122A4F667B654044B06161 /* Pods_Spherical.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A110C087E15345AB6F2951B /* Pods_Spherical.framework */; };
 		4E3FA7D23783D2002C58E524 /* Pods_SphericalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4C01C22343CA4A0E62E8B7 /* Pods_SphericalTests.framework */; };
 /* End PBXBuildFile section */
@@ -71,8 +70,8 @@
 		38914AF621E7FA510034F83F /* Colors_0.06.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Colors_0.06.sqlite-wal"; sourceTree = "<group>"; };
 		38914AF721E7FA510034F83F /* Colors_0.06.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Colors_0.06.sqlite; sourceTree = "<group>"; };
 		38914AF821E7FA520034F83F /* Colors_0.06.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Colors_0.06.sqlite-shm"; sourceTree = "<group>"; };
+		38DE739E21EC4D7800DBCF03 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimitivesScene.swift; sourceTree = "<group>"; };
-		38E54D7321C6DA6100996BAE /* DeirdreFaveColors.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DeirdreFaveColors.mlmodel; sourceTree = "<group>"; };
 		3A2E07D80B7F69C2CCE135B8 /* Pods-Spherical.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spherical.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spherical/Pods-Spherical.debug.xcconfig"; sourceTree = "<group>"; };
 		5A110C087E15345AB6F2951B /* Pods_Spherical.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spherical.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6210021194684338F046BAB8 /* Pods-SphericalUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SphericalUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SphericalUITests/Pods-SphericalUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +132,7 @@
 		3863ABF32182357C00B60381 = {
 			isa = PBXGroup;
 			children = (
+				38DE739E21EC4D7800DBCF03 /* README.md */,
 				3863ABFE2182357C00B60381 /* Spherical */,
 				3863AC132182357E00B60381 /* SphericalTests */,
 				3863AC1E2182357E00B60381 /* SphericalUITests */,
@@ -164,7 +164,6 @@
 				3863AC082182357E00B60381 /* LaunchScreen.storyboard */,
 				3846525621854A610069BAFA /* Info.plist */,
 				38914AF321E7FA0F0034F83F /* Colors.xcdatamodeld */,
-				38E54D7321C6DA6100996BAE /* DeirdreFaveColors.mlmodel */,
 				38914AF721E7FA510034F83F /* Colors_0.06.sqlite */,
 				38914AF821E7FA520034F83F /* Colors_0.06.sqlite-shm */,
 				38914AF621E7FA510034F83F /* Colors_0.06.sqlite-wal */,
@@ -225,7 +224,6 @@
 				3863ABF82182357C00B60381 /* Sources */,
 				3863ABF92182357C00B60381 /* Frameworks */,
 				3863ABFA2182357C00B60381 /* Resources */,
-				0B4C0F9A045F096FFEC16C68 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -303,7 +301,7 @@
 				};
 			};
 			buildConfigurationList = 3863ABF72182357C00B60381 /* Build configuration list for PBXProject "Spherical" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -353,30 +351,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0B4C0F9A045F096FFEC16C68 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Spherical/Pods-Spherical-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spherical/Pods-Spherical-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		5CAE8DB8C075EA50760DB72B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -453,7 +427,6 @@
 				38914AF021E7F9E90034F83F /* ShadowColor.swift in Sources */,
 				3863AC022182357C00B60381 /* ViewController.swift in Sources */,
 				38914AF121E7F9E90034F83F /* Maker.swift in Sources */,
-				38E54D7721C7613100996BAE /* DeirdreFaveColors.mlmodel in Sources */,
 				3863AC002182357C00B60381 /* AppDelegate.swift in Sources */,
 				38914AF221E7F9E90034F83F /* EyePalette.swift in Sources */,
 				38914AF521E7FA0F0034F83F /* Colors.xcdatamodeld in Sources */,
