@@ -2,7 +2,9 @@
 
 This project came to be because I wanted to brush up on CoreData (having a WebObjects background) and learn some SceneKit—with no background in computational geometry. This is one of several apps that talk to the same back end data store, including features such as CoreML predictions about color.
 
-The data organization is based on makeup colors: makers, palettes, and eyeshadow colors.
+[For a quick view of what this app looks like, here's my Instagram post.](https://www.instagram.com/p/BqS0Sn-gDdF/) Since then, I added automatic rotation rather than the user initiated jerky motion in that post.
+
+The app's data organization is based on makeup colors: makers, palettes, and eyeshadow colors.
 
 The next app will go another step further and create convex hulls for each palette. The goal is to demonstrate overlap as well as show what colors can be created with that palette.
 
