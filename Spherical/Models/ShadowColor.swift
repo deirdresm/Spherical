@@ -79,9 +79,11 @@ public class ShadowColor: NSManagedObject {
 		let bigSphereRadius : CGFloat = 2.0 // radius
 
 		let radius = Double(bigSphereRadius) + (1.25 * self.saturation) - 0.5
+		
+		let π = Double.pi
 
-		let sRadians = 2.0 * self.hue * Double.pi
-		let tRadians = self.brightness * Double.pi
+		let sRadians = 2.0 * self.hue * π
+		let tRadians = self.brightness * π
 
 		self.x = radius * cos(sRadians) * sin(tRadians)
 		self.y = radius * cos(tRadians)

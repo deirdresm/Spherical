@@ -32,7 +32,7 @@ public class Maker: NSManagedObject {
 	func shadowsByPaletteOrderName() -> NSMutableArray? {
 		
 		let palettes = sortedPalettes()
-		var shadows = NSMutableArray()
+		var shadows = (NSMutableArray())
 		
 		for palette in palettes {
 			shadows.addObjects(from: palette.sortedShadows())
@@ -41,12 +41,15 @@ public class Maker: NSManagedObject {
 		return shadows
 	}
 	
+	
+	// palettes for current maker in alphabetical order
+	
 	func sortedPalettes() -> [EyePalette] {
 		let sortNameDescriptor = NSSortDescriptor.init(key: "name", ascending: true)
 		
 		return (self.eyePalettes)?.sortedArray(using: [sortNameDescriptor]) as! [EyePalette]
 	}
-
+	
 	@objc(addEyePalettesObject:)
 	@NSManaged public func addToEyePalettes(_ value: EyePalette)
 	

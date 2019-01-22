@@ -21,10 +21,13 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 	let littleSphereRadius : CGFloat = 0.075 // TODO: should calculate to adjust this
 	let makerSphereRadius : CGFloat = 0.000075 // TODO: should calculate to adjust this
 	let cameraNode = SCNNode()          // the camera
+	var twinkleNode = SphereScnNode()
 	private var shadowColors: [NSManagedObject] = []
 	
 	var makerDict : NSMutableDictionary = [:]
-
+	var makerNameArray : [String] = []
+	var currentMaker = 0
+	
 	override init() {
 		super.init()
 		
@@ -47,15 +50,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 
 		mainSphereNode = rootNode
 		
-		// rotate the root node
-		
-		let rotationAnimation = CABasicAnimation(keyPath: "rotation")
-
-		// Animate one complete revolution around the node's Y axis.
-		rotationAnimation.toValue =  NSValue(scnVector4: SCNVector4(0, -1, 0, 2 * Double.pi))
-		rotationAnimation.duration = 5.0 // One revolution in five seconds.
-		rotationAnimation.repeatCount = .greatestFiniteMagnitude // Repeat the animation forever.
-		rootNode.addAnimation(rotationAnimation, forKey: "rotation") // Attach the animation to the node to start it.
+		rotateSphere() // Attach the animation to the node to start it.
 		
 		// Attach colors to the main node via Maker. Note that there's a join in the middle
 		// not used in this app. Adding them this way will allow the app to animate by maker,
@@ -65,6 +60,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 			attachColorToMaker(shadowColor as! ShadowColor)
 		}
 
+		scheduleMakerAnimations()
 	}
 
 	// TODO: required initializer that should be fleshed out
@@ -120,7 +116,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		// add geometry to sphere
 
 		let sphereNode = SCNNode(geometry: sphereGeometry)
-		sphereNode.opacity = 1.0 // fully transparent (at the start)
+//		sphereNode.opacity = 0.0 // fully transparent (at the start)
 		sphereNode.position = calcPosition(shadowColor)
 		
 		// add to maker sphere
@@ -138,12 +134,56 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		return vector
 	}
 	
-	// TODO: Not sure if this is the right place, but need a place for animating the makers.
 	
-	func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-		// Called before each frame is rendered
+	// MARK: Core Animation-fu
+
+
+	func scheduleMakerAnimations() {
+		// get list of maker names, sorted
+		makerNameArray = (makerDict.allKeys).sorted(by: { ($0 as! String) < ($1 as! String) }) as! [String]
+		
+		let localTime = CACurrentMediaTime() // get this number as late as possible
+		
+		if currentMaker >= makerNameArray.count {
+			currentMaker = 0
+		}
+
+//		var twinkleAnimationGroup = CABasicAnimation(keyPath: "TwinkleGroup")
+//		var twinkleArray : [CAAnimation] = []
+
+		for makerName in makerNameArray {
+			
+			let twinkleAnimation = CABasicAnimation(keyPath: "opacity")
+			let twinkleNode = makerDict[makerName] as! SCNNode
+			
+			// Animate one complete revolution around the node's Y axis.
+			
+			twinkleAnimation.fromValue =  0.0
+			twinkleAnimation.toValue =  1.0
+			twinkleAnimation.duration = 2.0 // take two whole seconds
+			twinkleAnimation.autoreverses = true
+
+			twinkleNode.addAnimation(twinkleAnimation, forKey: "opacity-\(makerName)")
+			
+//			twinkleArray.append(twinkleAnimation)
+		}
+//		twinkleAnimationGroup.repeatCount = .greatestFiniteMagnitude // Repeat the animation forever.
+
 	}
 
-
+	fileprivate func rotateSphere() {
+		// rotate the root node
+		
+		let rotationAnimation = CABasicAnimation(keyPath: "rotation")
+		
+		// Animate one complete revolution around the node's Y axis.
+		
+		let π = Double.pi
+		
+		rotationAnimation.toValue =  NSValue(scnVector4: SCNVector4(0, -1, 0, 2 * π))
+		rotationAnimation.duration = 5.0 // One revolution in five seconds.
+		rotationAnimation.repeatCount = .greatestFiniteMagnitude // Repeat the animation forever.
+		rootNode.addAnimation(rotationAnimation, forKey: "opacity")
+	}
 }
 

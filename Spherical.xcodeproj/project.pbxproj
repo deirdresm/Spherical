@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0960A5FE5B10ADCCE15A362B /* Pods_SphericalUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 925CCB37853803B151AEA76B /* Pods_SphericalUITests.framework */; };
 		38260B32218A6A6F007F56B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3863AC062182357E00B60381 /* Assets.xcassets */; };
+		383E2F5221F7D23F00CC12F1 /* SphereScnNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F5121F7D23F00CC12F1 /* SphereScnNode.swift */; };
 		3863AC002182357C00B60381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3863ABFF2182357C00B60381 /* AppDelegate.swift */; };
 		3863AC022182357C00B60381 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3863AC012182357C00B60381 /* ViewController.swift */; };
 		3863AC052182357C00B60381 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3863AC032182357C00B60381 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 		38914AF921E7FA520034F83F /* Colors_0.06.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF621E7FA510034F83F /* Colors_0.06.sqlite-wal */; };
 		38914AFA21E7FA520034F83F /* Colors_0.06.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF721E7FA510034F83F /* Colors_0.06.sqlite */; };
 		38914AFB21E7FA520034F83F /* Colors_0.06.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF821E7FA520034F83F /* Colors_0.06.sqlite-shm */; };
+		38DE73A021ED37E900DBCF03 /* SceneAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE739F21ED37E900DBCF03 /* SceneAnimation.swift */; };
 		38E02A182192C6D40054ABD4 /* PrimitivesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */; };
 		40122A4F667B654044B06161 /* Pods_Spherical.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A110C087E15345AB6F2951B /* Pods_Spherical.framework */; };
 		4E3FA7D23783D2002C58E524 /* Pods_SphericalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4C01C22343CA4A0E62E8B7 /* Pods_SphericalTests.framework */; };
@@ -49,6 +51,7 @@
 		0B72800CB50C5C8D2DEC1096 /* Pods-SphericalUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SphericalUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SphericalUITests/Pods-SphericalUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1FAA1C130EAFBD197309608D /* Pods-SphericalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SphericalTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SphericalTests/Pods-SphericalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3820468721AE4E0F00E6A004 /* Spherical.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spherical.entitlements; sourceTree = "<group>"; };
+		383E2F5121F7D23F00CC12F1 /* SphereScnNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SphereScnNode.swift; path = Spherical/SphereScnNode.swift; sourceTree = SOURCE_ROOT; };
 		3846525621854A610069BAFA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3863ABFC2182357C00B60381 /* Spherical.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spherical.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3863ABFF2182357C00B60381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 		38914AF721E7FA510034F83F /* Colors_0.06.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Colors_0.06.sqlite; sourceTree = "<group>"; };
 		38914AF821E7FA520034F83F /* Colors_0.06.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Colors_0.06.sqlite-shm"; sourceTree = "<group>"; };
 		38DE739E21EC4D7800DBCF03 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		38DE739F21ED37E900DBCF03 /* SceneAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneAnimation.swift; sourceTree = "<group>"; };
 		38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimitivesScene.swift; sourceTree = "<group>"; };
 		3A2E07D80B7F69C2CCE135B8 /* Pods-Spherical.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spherical.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spherical/Pods-Spherical.debug.xcconfig"; sourceTree = "<group>"; };
 		5A110C087E15345AB6F2951B /* Pods_Spherical.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spherical.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +119,8 @@
 			children = (
 				3863AC012182357C00B60381 /* ViewController.swift */,
 				38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */,
+				383E2F5121F7D23F00CC12F1 /* SphereScnNode.swift */,
+				38DE739F21ED37E900DBCF03 /* SceneAnimation.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -428,7 +434,9 @@
 				3863AC022182357C00B60381 /* ViewController.swift in Sources */,
 				38914AF121E7F9E90034F83F /* Maker.swift in Sources */,
 				3863AC002182357C00B60381 /* AppDelegate.swift in Sources */,
+				383E2F5221F7D23F00CC12F1 /* SphereScnNode.swift in Sources */,
 				38914AF221E7F9E90034F83F /* EyePalette.swift in Sources */,
+				38DE73A021ED37E900DBCF03 /* SceneAnimation.swift in Sources */,
 				38914AF521E7FA0F0034F83F /* Colors.xcdatamodeld in Sources */,
 				38E02A182192C6D40054ABD4 /* PrimitivesScene.swift in Sources */,
 			);
