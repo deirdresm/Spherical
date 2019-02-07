@@ -14,5 +14,19 @@ class SphereScnNode: SCNNode {
 	let layer = {
 		return CALayer()
 	}()
+	
+	override init() {
+		super.init()
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+	}
+	
+	init(geometry: SCNGeometry) {
+		super.init()
+		self.geometry = geometry
+	}
+
 
 }

@@ -95,7 +95,7 @@ public class ShadowColor: NSManagedObject {
 	
 	func colorLooksGood() -> Bool {
 		
-		let epsilon = 0.0025 // avoid double/float comparison rounding errors
+		let ε = 0.000125 // avoid double/float comparison rounding errors
 		
 		if isCalibrated == true {
 			return true
@@ -103,15 +103,15 @@ public class ShadowColor: NSManagedObject {
 		
 		// ratings technically go from 1 to 10, but they can be zero if never initialized.
 		
-		if predictedRating < epsilon || predictedRating > 10.0 - epsilon {
+		if predictedRating < ε || predictedRating > 10.0 - ε {
 			return false
 		}
 		
 		// either the hue is 0 or 1 OR the saturation and brightness is 0 Or 1.
 		
-		if (self.hue < epsilon || self.hue > 1.0 - epsilon) ||
-			((self.saturation < epsilon || self.saturation > 1.0 - epsilon) &&
-			 (self.brightness < epsilon || self.brightness > 1.0 - epsilon)) {
+		if (self.hue < ε || self.hue > 1.0 - ε) ||
+			((self.saturation < ε || self.saturation > 1.0 - ε) &&
+			 (self.brightness < ε || self.brightness > 1.0 - ε)) {
 			
 			return false // didn't parse correctly the first time. Probably.
 		}
