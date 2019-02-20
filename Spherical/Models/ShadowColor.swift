@@ -19,6 +19,12 @@ import CoreData
 import CoreML
 import Vision
 
+enum ShadowColorSort {
+	case none
+	case name
+	case makerPaletteName
+}
+
 public class ShadowColor: NSManagedObject {
 
 	@NSManaged public var name: String
@@ -119,5 +125,7 @@ public class ShadowColor: NSManagedObject {
 		return true // TODO: I think, must ponder more
 		
 	}
-
+	
+	// class methods
+	
 }

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="EyePalette" representedClassName=".EyePalette" syncable="YES">
+        <attribute name="boughtFrom" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="boughtOn" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="predictedRating" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pricePaid" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" syncable="YES"/>
+        <relationship name="maker" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Maker" inverseName="eyePalettes" inverseEntity="Maker" syncable="YES"/>
+        <relationship name="shadows" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ShadowColor" inverseName="eyePalette" inverseEntity="ShadowColor" syncable="YES"/>
+        <fetchedProperty name="shadowsInPaletteOrder" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="EyePalette"/>
+        </fetchedProperty>
+        <fetchIndex name="byUUID">
+            <fetchIndexElement property="uuid" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byMakerAndName">
+            <fetchIndexElement property="maker" type="Binary" order="ascending"/>
+            <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byShadowColors">
+            <fetchIndexElement property="shadows" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="uuid"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Maker" representedClassName=".Maker" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="predictedRating" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" syncable="YES"/>
+        <relationship name="eyePalettes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EyePalette" inverseName="maker" inverseEntity="EyePalette" syncable="YES"/>
+        <fetchIndex name="byUUID">
+            <fetchIndexElement property="uuid" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byName">
+            <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPalettes">
+            <fetchIndexElement property="eyePalettes" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="uuid"/>
+            </uniquenessConstraint>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ShadowColor" representedClassName=".ShadowColor" syncable="YES">
+        <attribute name="boughtOn" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="brightness" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cropFile" optional="YES" attributeType="URI" syncable="YES"/>
+        <attribute name="cropFileSize" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cropParsedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="hue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="imageFile" optional="YES" attributeType="URI" syncable="YES"/>
+        <attribute name="imageFileSize" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="imageParsedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isCalibrated" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lastWorn" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="nsColor" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="position" attributeType="Integer 16" minValueString="-1" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="predictedRating" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pricePaid" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="saturation" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="temptaliaRating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" syncable="YES"/>
+        <attribute name="x" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="y" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="z" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="eyePalette" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EyePalette" inverseName="shadows" inverseEntity="EyePalette" syncable="YES"/>
+        <fetchIndex name="byUUID">
+            <fetchIndexElement property="uuid" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPalettePositionName">
+            <fetchIndexElement property="eyePalette" type="Binary" order="ascending"/>
+            <fetchIndexElement property="position" type="Binary" order="ascending"/>
+            <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byPredictedRating">
+            <fetchIndexElement property="predictedRating" type="Binary" order="descending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="uuid"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <fetchRequest name="ShadowNilColor" entity="ShadowColor" predicateString="x == 0 OR y == 0 OR z == 0 OR hue == 0 OR saturation == 0 OR brightness == 0 OR hue == 1 OR saturation == 1 OR brightness == 1"/>
+    <elements>
+        <element name="EyePalette" positionX="-54" positionY="9" width="128" height="209"/>
+        <element name="Maker" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="ShadowColor" positionX="-45" positionY="54" width="128" height="405"/>
+    </elements>
+</model>

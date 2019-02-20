@@ -11,17 +11,17 @@ import SceneKit
 import CoreData
 
 class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
-
-	//	let sceneRenderer: SCNSceneRenderer // TODO: for later animation
 	
-	var vc : UIViewController?
+	// TODO: break this out where it makes sense to.
 
-	var mainSphereNode : SCNNode?
+	var vc : ViewController?
+
 	let mainSphereRadius : CGFloat = 2.0 // radius
-	let littleSphereRadius : CGFloat = 0.075 // TODO: should calculate to adjust this
-	let makerSphereRadius : CGFloat = 0.000075 // TODO: should calculate to adjust this
+	let littleSphereRadius : CGFloat = 0.075
+	let makerSphereRadius : CGFloat = 0.000075
 	let cameraNode = SCNNode()          // the camera
-	private var shadowColors: [NSManagedObject] = []
+	private var shadowColors: [ShadowColor] = []
+	let makerAnimationDuration : Double = 8.0
 	
 	var makerDict : NSMutableDictionary = [:]
 	var makerNameArray : [String] = []
@@ -35,30 +35,56 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		}
 		
 		let moc = appDelegate.persistentContainer.viewContext
-
-		let shadowFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ShadowColor")
-		let nameSort = NSSortDescriptor(key: "name", ascending: true)
 		
-		shadowFetchRequest.sortDescriptors = [nameSort]
+		var makers: [Maker] = []
+		
+		let makerFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Maker")
+		let nameSort = NSSortDescriptor(key: "name", ascending: true)
+		makerFetchRequest.sortDescriptors = [nameSort]
 		
 		do {
-			self.shadowColors = try moc.fetch(shadowFetchRequest)
+			makers = try moc.fetch(makerFetchRequest) as! [Maker]
+		} catch let error as NSError {
+			print("Could not fetch. \(error), \(error.userInfo)")
+		}
+		
+		for maker in makers {
+			if maker.numShadowColors() < 20 {
+				continue // not worth bothering with
+			}
+			
+			// make maker node
+			
+			let sphereGeometry = SCNSphere(radius: makerSphereRadius)
+			sphereGeometry.firstMaterial!.diffuse.contents = UIColor.black
+			let makerNode = SphereScnNode(geometry: sphereGeometry)
+			makerNode.opacity = 0.0 // start transparent
+			makerNode.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
+			rootNode.addChildNode(makerNode)
+			makerDict[maker.name] = makerNode
+			makerNameArray.append(maker.name)
+
+			// find the shadow colors through the palettes relationship
+			// we know there are palettes because we filtered out the ones without
+			
+			for palette in maker.eyePalettes! {
+				for shadow in (palette as! EyePalette).shadows! {
+					attachColorToMaker(shadow as! ShadowColor, makerNode: makerNode)
+				}
+			}
+			
+		}
+
+		let shadowFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ShadowColor")
+		
+		do {
+			self.shadowColors = try moc.fetch(shadowFetchRequest) as! [ShadowColor]
 		} catch let error as NSError {
 			print("Could not fetch. \(error), \(error.userInfo)")
 		}
 
-		mainSphereNode = rootNode
-		
 		rotateSphere() // Attach the animation to the node to start it.
 		
-		// Attach colors to the main node via Maker. Note that there's a join in the middle
-		// not used in this app. Adding them this way will allow the app to animate by maker,
-		// which was my goal here.
-
-		for shadowColor in shadowColors {
-			attachColorToMaker(shadowColor as! ShadowColor)
-		}
-
 		scheduleMakerAnimations()
 	}
 
@@ -67,50 +93,15 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	// Have to reach through the middle relation to get the maker name from the shadow color instance.
-	
-	func getMakerName(sc: ShadowColor) -> String {
-		return sc.eyePalette!.maker!.name
-	}
-	
-	// adds maker node to dictionary if it doesn't exist, then adds it to the main node.
-	// returns the found or created sphereNode.
-	
-	// TODO: it might be cool at some later time to make the maker node's location the median
-	// point between all the colors. Not sure what I'd do with that, but it's an interesting idea.
-	
-	func findMakerNode(_ sc: ShadowColor) -> SphereScnNode {
-		
-		let name = getMakerName(sc: sc)
-		
-		if let makerNode = makerDict[name] {
-			return makerNode as! SphereScnNode	 // it's already added to the main node
-		} else {
-			let sphereGeometry = SCNSphere(radius: makerSphereRadius)
-			sphereGeometry.firstMaterial!.diffuse.contents = UIColor.black
-			let makerNode = SphereScnNode(geometry: sphereGeometry)
-			makerNode.opacity = 0.05 // start transparent
-			makerNode.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
-			mainSphereNode?.addChildNode(makerNode)
-			makerDict[name] = makerNode
-			
-			return makerNode
-		}
-	}
+	func attachColorToMaker(_ shadowColor: ShadowColor, makerNode: SCNNode) {
 
-	// the "big sphere" here is virtual: essentially the colors are being added to a sphere.
-	// I didn't realize that making that sphere transparent would also make chld nodes
-	// transparent, but that makes sense. So we change it up.
-	
-	func attachColorToMaker(_ shadowColor: ShadowColor) {
-		
 		// calculate geometry and position
 		let sphereGeometry = SCNSphere(radius: littleSphereRadius)
 
 		// add color
 		
 		sphereGeometry.firstMaterial!.diffuse.contents = UIColor.init(hue: CGFloat(shadowColor.hue), saturation: CGFloat(shadowColor.saturation), brightness: CGFloat(shadowColor.brightness), alpha: 1.0)
-		sphereGeometry.firstMaterial!.lightingModel = .phong
+		sphereGeometry.firstMaterial!.lightingModel = .phong // TODO: pretty sure Phong isn't the right answer, but it's a first approximation
 		
 		// add geometry to sphere
 
@@ -119,7 +110,6 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		
 		// add to maker SCNNode
 		
-		let makerNode = findMakerNode(shadowColor)
 		makerNode.addChildNode(sphereNode)
 	}
 	
@@ -133,37 +123,68 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 	}
 	
 	
-	// MARK: Core Animation-fu
+	// MARK: Animation-fu
+
+	
+//	var animateMakerNode: CABasicAnimation  = {
+//		let twinkleAnimation = CABasicAnimation(keyPath: "opacity")
+//		twinkleAnimation.fromValue =  0.0
+//		twinkleAnimation.toValue =  1.0
+//		twinkleAnimation.duration = 10.0
+//		twinkleAnimation.autoreverses = true
+//
+//
+//		return twinkleAnimation
+//	}()
+	
+	func setMakerTitle() {
+		
+	}
+	
+	func animateMakerNode(makerNode: SCNNode, textNode: SCNText, index: Int) {
+		
+		makerNode.runAction(SCNAction.sequence(
+			[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
+			 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
+			 SCNAction.wait(duration: makerAnimationDuration/2.0),
+			 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
+			 ]))
+		
+
+//		vc?.setMakerName(makerNameArray[index])
+		
+	}
 
 
 	func scheduleMakerAnimations() {
-		// get list of maker names, sorted
-		makerNameArray = (makerDict.allKeys).sorted(by: { ($0 as! String) < ($1 as! String) }) as! [String]
 		
-		let localTime = CACurrentMediaTime() // get this number as late as possible
-		
-		if currentMaker >= makerNameArray.count {
-			currentMaker = 0
-		}
-
-//		let twinkleAnimationGroup = CAAnimationGroup()
-//		var twinkleArray : [CAAnimation] = []
-
-//		let twinkleAnimation = CABasicAnimation(keyPath: "opacity")
-
-		for makerName in makerNameArray {
+		for index in 0..<makerNameArray.count {
+			
+			let makerName = makerNameArray[index]
 			
 			let twinkleNode = makerDict[makerName] as! SphereScnNode
 			
-			SCNTransaction.easeInOut(duration: 5) {
-				twinkleNode.opacity = 1.0
-			}
+			let makerLabel = 
+			
+			twinkleNode.runAction(SCNAction.sequence(
+				[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
+				 
+				 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
+				 SCNAction.wait(duration: makerAnimationDuration/2.0),
+				 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
+				 ]))
+
+//			SCNTransaction.easeInOut(duration: makerAnimationDuration) {
+//				rootNode?.addChildNode(twinkleNode) // plug it in
+//				twinkleNode.opacity = 1.0
+//				twinkleNode.removeFromParentNode()	// unplug when we're done
+///			}
 			
 			// Animate one complete revolution around the node's Y axis.
 			
 //			twinkleAnimation.fromValue =  0.05
 //			twinkleAnimation.toValue =  1.0
-//			twinkleAnimation.duration = 2.0 // take two whole seconds
+//			twinkleAnimation.duration = makerAnimationDuration // take two whole seconds
 //			twinkleAnimation.autoreverses = true
 //
 //			twinkleNode.layer.add(twinkleAnimation, forKey: "opacity-\(makerName)")
@@ -172,7 +193,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 //			twinkleArray.append(twinkleAnimation)
 		}
 //		twinkleAnimationGroup.repeatCount = .greatestFiniteMagnitude // Repeat the animation forever.
-		
+//
 //		twinkleAnimationGroup.animations = twinkleArray
 
 	}
@@ -180,19 +201,8 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 	fileprivate func rotateSphere() {
 		// rotate the root node
 		
-		let action = SCNAction.repeatForever(SCNAction.rotate(by: -1*(.pi), around: SCNVector3(0, 1, 0), duration: 10))
+		let action = SCNAction.repeatForever(SCNAction.rotate(by: -1*(.pi), around: SCNVector3(0, 1, 0), duration: makerAnimationDuration))
 		rootNode.runAction(action)
-		
-//		let rotationAnimation = CABasicAnimation(keyPath: "rotation")
-//
-//		// Animate one complete revolution around the node's Y axis.
-//
-//		let π = Double.pi
-//
-//		rotationAnimation.toValue =  NSValue(scnVector4: SCNVector4(0, -1, 0, 2 * π))
-//		rotationAnimation.duration = 20.0 // One revolution in five seconds.
-//		rotationAnimation.repeatCount = .greatestFiniteMagnitude // Repeat the animation forever.
-//		rootNode.addAnimation(rotationAnimation, forKey: "rotation")
 	}
 }
 

@@ -64,7 +64,7 @@ class ViewController: UIViewController {
 
 	}
 	
-	func setMakerName(_ name: String) {
+	public func setMakerName(_ name: String) {
 		makerNameLabel.text = name
 	}
 

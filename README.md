@@ -1,6 +1,7 @@
 # Spherical
 
 ## Glorious Computational Excess, part 1
+### Build 0.2
 
 This project came to be because I wanted to brush up on CoreData (having a WebObjects background) and learn some SceneKit—with no background in computational geometry. This is one of several apps that talk to the same back end data store, including features such as CoreML predictions about color.
 

@@ -28,6 +28,15 @@ public class Maker: NSManagedObject {
 //	func setUniqueidentifier(_ uniqueidentifier: String) {
 //		self.uniqueidentifier = uniqueidentifier
 //	}
+	
+	func numShadowColors() -> Int {
+		var shadowCount = 0
+		
+		for palette in eyePalettes! {
+			shadowCount += (palette as! EyePalette).shadows?.count ?? 0
+		}
+		return shadowCount
+	}
 
 	func shadowsByPaletteOrderName() -> NSMutableArray? {
 		
