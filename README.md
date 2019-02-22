@@ -1,7 +1,9 @@
 # Spherical
 
 ## Glorious Computational Excess, part 1
-### Build 0.2
+### Build 0.3
+
+Project I coded from scratch using Swift, CoreData, and SceneKit. This app runs on iOS, but I plan to add a macOS target at some point.
 
 This project came to be because I wanted to brush up on CoreData (having a WebObjects background) and learn some SceneKit—with no background in computational geometry. This is one of several apps that talk to the same back end data store, including features such as CoreML predictions about color.
 
@@ -13,10 +15,18 @@ The next app will go another step further and create convex hulls for each palet
 
 ## ToDo
 
-1. Add per-maker animations
+1. ~~Add per-maker animations~~ Done as of 0.3.
 2. Fix the cruft marked in the code
-3. Pull in the unit and UI tests
+3. Incorporate Ensembles.
+4. Pull in the unit and UI tests, which may involve refactoring to make some things more testable. Slow on this because there are precious few good examples of tests online with projects using similar features, so learning this the hard way.
+5. Add a macOS target, and maybe also tvOS (this really requires more than watchOS can give, I believe).
 
 ## External dependencies
 
 None at this time. Note that I've moved to Ensembles for my main project, so likely this will require Ensembles at some point. However, there are issues I haven't yet debugged on that, so…it'll be a while.
+
+## Changelog
+
+**0.2 -> 0.3**
+
+Added per-maker animations.
