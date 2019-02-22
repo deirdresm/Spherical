@@ -26,6 +26,8 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 	var makerDict : NSMutableDictionary = [:]
 	var makerNameArray : [String] = []
 	var currentMaker = 0
+	var textGeometry = SCNText(string: "", extrusionDepth: 0.2)
+	var makerNameNode = MakerNameNode(makerName: " ")		// the title
 	
 	override init() {
 		super.init()
@@ -47,6 +49,8 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		} catch let error as NSError {
 			print("Could not fetch. \(error), \(error.userInfo)")
 		}
+		
+		rootNode.addChildNode(makerNameNode)
 		
 		for maker in makers {
 			if maker.numShadowColors() < 20 {
@@ -141,10 +145,23 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		
 	}
 	
-	func animateMakerNode(makerNode: SCNNode, textNode: SCNText, index: Int) {
+	func animateMakerNode(makerNode: SCNNode, textNode: MakerNameNode, index: Int) {
 		
 		makerNode.runAction(SCNAction.sequence(
 			[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
+			 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
+			 SCNAction.wait(duration: makerAnimationDuration/2.0),
+			 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
+			 ]))
+		
+		makerNameNode.runAction(SCNAction.sequence(
+			[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
+			 SCNAction.run({ (node) in
+				
+				let mnn = node as! MakerNameNode
+				
+				mnn.setString(text: self.makerNameArray[index])
+			}),
 			 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
 			 SCNAction.wait(duration: makerAnimationDuration/2.0),
 			 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
@@ -164,7 +181,13 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 			
 			let twinkleNode = makerDict[makerName] as! SphereScnNode
 			
-			let makerLabel = 
+			twinkleNode.runAction(SCNAction.sequence(
+				[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
+				 
+				 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
+				 SCNAction.wait(duration: makerAnimationDuration/2.0),
+				 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
+				 ]))
 			
 			twinkleNode.runAction(SCNAction.sequence(
 				[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
@@ -173,7 +196,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 				 SCNAction.wait(duration: makerAnimationDuration/2.0),
 				 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
 				 ]))
-
+			
 //			SCNTransaction.easeInOut(duration: makerAnimationDuration) {
 //				rootNode?.addChildNode(twinkleNode) // plug it in
 //				twinkleNode.opacity = 1.0

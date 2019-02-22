@@ -15,11 +15,14 @@ The next app will go another step further and create convex hulls for each palet
 
 ## ToDo
 
+(Not in any particular order)
+
 1. ~~Add per-maker animations~~ Done as of 0.3.
-2. Fix the cruft marked in the code
-3. Incorporate Ensembles.
-4. Pull in the unit and UI tests, which may involve refactoring to make some things more testable. Slow on this because there are precious few good examples of tests online with projects using similar features, so learning this the hard way.
-5. Add a macOS target, and maybe also tvOS (this really requires more than watchOS can give, I believe).
+2. Add the maker title.
+3. Fix the cruft marked in the code
+4. Incorporate Ensembles.
+5. Pull in the unit and UI tests, which may involve refactoring to make some things more testable. Slow on this because there are precious few good examples of tests online with projects using similar features, so learning this the hard way.
+6. Add a macOS target, and maybe also tvOS (this really requires more than watchOS can give, I believe).
 
 ## External dependencies
 
