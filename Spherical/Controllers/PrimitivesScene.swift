@@ -23,12 +23,15 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 	private var shadowColors: [ShadowColor] = []
 	let makerAnimationDuration : Double = 8.0
 	
-	var makerDict : NSMutableDictionary = [:]
-	var makerNameArray : [String] = []
+//	var makerDict : NSMutableDictionary = [:]
 	var currentMaker = 0
 	var textGeometry = SCNText(string: "", extrusionDepth: 0.2)
-	var makerNameNode = MakerNameNode(makerName: " ")		// the title
-	
+	var makerNameNode = MakerNameNode(makerName: "")		// the title
+
+	var makersOrig = [Maker]()
+	var makersCulled = [Maker]()
+	var makerNodes = [SCNNode]()
+
 	override init() {
 		super.init()
 		
@@ -38,40 +41,49 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		
 		let moc = appDelegate.persistentContainer.viewContext
 		
-		var makers: [Maker] = []
 		
 		let makerFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Maker")
 		let nameSort = NSSortDescriptor(key: "name", ascending: true)
 		makerFetchRequest.sortDescriptors = [nameSort]
 		
 		do {
-			makers = try moc.fetch(makerFetchRequest) as! [Maker]
+			makersOrig = try (moc.fetch(makerFetchRequest) as? [Maker])!
 		} catch let error as NSError {
 			print("Could not fetch. \(error), \(error.userInfo)")
 		}
 		
+		makerNameNode.geometry = textGeometry
+		
 		rootNode.addChildNode(makerNameNode)
 		
-		for maker in makers {
-			if maker.numShadowColors() < 20 {
-				continue // not worth bothering with
+		// count backwards to make array shortening easier.
+		
+		print("makers.count = \(makersOrig.count)")
+		
+		for index in 0..<makersOrig.count {
+			let maker = makersOrig[index]
+			if maker.numShadowColors() >= 20 {	// too few items to bother graphing
+				makersCulled.append(maker)
 			}
-			
+		}
+		
+		print("makers.count = \(makersOrig.count) vs. culled = \(makersCulled.count)")
+		
+		for index in 0..<makersCulled.count {
 			// make maker node
 			
 			let sphereGeometry = SCNSphere(radius: makerSphereRadius)
 			sphereGeometry.firstMaterial!.diffuse.contents = UIColor.black
-			let makerNode = SphereScnNode(geometry: sphereGeometry)
+			let makerNode = SCNNode(geometry: sphereGeometry)
 			makerNode.opacity = 0.0 // start transparent
 			makerNode.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
 			rootNode.addChildNode(makerNode)
-			makerDict[maker.name] = makerNode
-			makerNameArray.append(maker.name)
+			makerNodes.append(makerNode)
 
 			// find the shadow colors through the palettes relationship
 			// we know there are palettes because we filtered out the ones without
 			
-			for palette in maker.eyePalettes! {
+			for palette in makersCulled[index].eyePalettes! {
 				for shadow in (palette as! EyePalette).shadows! {
 					attachColorToMaker(shadow as! ShadowColor, makerNode: makerNode)
 				}
@@ -109,7 +121,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		
 		// add geometry to sphere
 
-		let sphereNode = SphereScnNode(geometry: sphereGeometry)
+		let sphereNode = SCNNode(geometry: sphereGeometry)
 		sphereNode.position = calcPosition(shadowColor)
 		
 		// add to maker SCNNode
@@ -145,27 +157,44 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 		
 	}
 	
-	func animateMakerNode(makerNode: SCNNode, textNode: MakerNameNode, index: Int) {
+	func animateMakerNode(makerNode: SCNNode, index: Int) {
 		
-		makerNode.runAction(SCNAction.sequence(
-			[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
-			 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
-			 SCNAction.wait(duration: makerAnimationDuration/2.0),
-			 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
-			 ]))
+//		makerNode.runAction(SCNAction.sequence(
+//			[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
+//			 SCNAction.run({ (node) in
+//
+//				self.vc!.setMakerName(self.makerNameArray[index])
+//				print(self.makerNameArray[index])
+//
+////				mnn.setString(text: self.makerNameArray[index])
+//			}),
+//			 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
+//			 SCNAction.wait(duration: makerAnimationDuration/2.0),
+//			 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
+//			 ]))
 		
-		makerNameNode.runAction(SCNAction.sequence(
-			[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
-			 SCNAction.run({ (node) in
-				
-				let mnn = node as! MakerNameNode
-				
-				mnn.setString(text: self.makerNameArray[index])
-			}),
-			 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
-			 SCNAction.wait(duration: makerAnimationDuration/2.0),
-			 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
-			 ]))
+		let _ = SCNTransaction()
+		makerNode.runAction(SCNAction.wait(duration: makerAnimationDuration * Double(index)))
+		textGeometry.string = makersCulled[index].name
+//		vc!.setMakerName(self.makerNameArray[index])
+//		print(self.makerNameArray[index])
+		makerNode.runAction(SCNAction.sequence([SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
+					SCNAction.wait(duration: makerAnimationDuration/2.0),
+					SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
+					]))
+		
+//		makerNameNode.runAction(SCNAction.sequence(
+//			[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
+//			 SCNAction.run({ (node) in
+//
+//				let mnn = node as! MakerNameNode
+//
+//				mnn.setString(text: self.makerNameArray[index])
+//			}),
+//			 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
+//			 SCNAction.wait(duration: makerAnimationDuration/2.0),
+//			 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
+//			 ]))
 		
 
 //		vc?.setMakerName(makerNameArray[index])
@@ -174,37 +203,45 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 
 
 	func scheduleMakerAnimations() {
+
+		for index in 0..<makersCulled.count {
+
+//			let makerName = makers[index].name
+
+			let twinkleNode = makerNodes[index]
+			
+//			animateMakerNode(makerNode: twinkleNode, index: index)
+
+			twinkleNode.runAction(SCNAction.sequence(
+				[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
+				 SCNAction.run({ (node) in
 		
-		for index in 0..<makerNameArray.count {
-			
-			let makerName = makerNameArray[index]
-			
-			let twinkleNode = makerDict[makerName] as! SphereScnNode
-			
-			twinkleNode.runAction(SCNAction.sequence(
-				[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
-				 
+						let makerName = self.makersCulled[index].name
+		
+						self.makerNameNode.setString(text: makerName)
+					}),
+
 				 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
 				 SCNAction.wait(duration: makerAnimationDuration/2.0),
 				 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
 				 ]))
-			
+
 			twinkleNode.runAction(SCNAction.sequence(
 				[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
-				 
+
 				 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
 				 SCNAction.wait(duration: makerAnimationDuration/2.0),
 				 SCNAction.fadeOut(duration: makerAnimationDuration/4.0),
 				 ]))
-			
+
 //			SCNTransaction.easeInOut(duration: makerAnimationDuration) {
 //				rootNode?.addChildNode(twinkleNode) // plug it in
 //				twinkleNode.opacity = 1.0
 //				twinkleNode.removeFromParentNode()	// unplug when we're done
 ///			}
-			
+
 			// Animate one complete revolution around the node's Y axis.
-			
+
 //			twinkleAnimation.fromValue =  0.05
 //			twinkleAnimation.toValue =  1.0
 //			twinkleAnimation.duration = makerAnimationDuration // take two whole seconds

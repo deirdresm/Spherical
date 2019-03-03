@@ -11,8 +11,6 @@ import SceneKit
 
 class MakerNameNode: SCNNode {
 	
-	private var makerNameText: SCNText?
-	
 	convenience init(makerName: String) {
 		self.init()
 		
@@ -20,22 +18,22 @@ class MakerNameNode: SCNNode {
 		let node = SCNNode()
 		let extrusionDepth : CGFloat = 0.002
 		let makerNameScale = SCNVector3Make(0.2, 0.2, 0.2)
+		self.position = SCNVector3(x: 0, y: 1.5, z: 0)
 
 		let max, min: SCNVector3
 		let tx, ty, tz: Float
 
-		makerNameText = SCNText(string: makerName, extrusionDepth: extrusionDepth)
-		makerNameText?.firstMaterial?.diffuse.contents = UIColor.white
-		makerNameText?.firstMaterial?.specular.contents = UIColor.white
+		geometry = SCNText(string: makerName, extrusionDepth: extrusionDepth)
+		geometry?.firstMaterial?.diffuse.contents = UIColor.white
+		geometry?.firstMaterial?.specular.contents = UIColor.white
 		
-		max = makerNameText!.boundingBox.max
-		min = makerNameText!.boundingBox.min
+		max = geometry!.boundingBox.max
+		min = geometry!.boundingBox.min
 
 		tx = (max.x - min.x)/2
 		ty = min.y
 		tz = Float(extrusionDepth)/2
 		
-		node.geometry = makerNameText
 		node.scale = makerNameScale
 		self.center()
 		
@@ -46,7 +44,7 @@ class MakerNameNode: SCNNode {
 	
 	func setString(text: String) {
 		
-		makerNameText?.string = text
+		(geometry as! SCNText).string = text
 		
 	}
 	
@@ -54,8 +52,8 @@ class MakerNameNode: SCNNode {
 		let (min, max) = self.boundingBox
 		
 		let dx = min.x + 0.5 * (max.x - min.x)
-		let dy = min.y + 0.5 * (max.y - min.y)
-		let dz = min.z + 0.5 * (max.z - min.z)
+		let dy = Float(2.0) // min.y + 0.5 * (max.y - min.y)
+		let dz = Float(1.0) // min.z + 0.5 * (max.z - min.z)
 		self.pivot = SCNMatrix4MakeTranslation(dx, dy, dz)
 	}
 

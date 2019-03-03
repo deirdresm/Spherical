@@ -122,6 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		return psc
 	}()
+
 	// MARK: - Core Data Saving support
 	
 	func saveContext () {
