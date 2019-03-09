@@ -216,10 +216,12 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 				[SCNAction.wait(duration: makerAnimationDuration * Double(index)),
 				 SCNAction.run({ (node) in
 		
-						let makerName = self.makersCulled[index].name
-		
-						self.makerNameNode.setString(text: makerName)
-					}),
+					let makerName = self.makersCulled[index].name
+					
+					DispatchQueue.main.async {
+						self.vc?.makerNameLabel.text = makerName
+					}
+				}),
 
 				 SCNAction.fadeIn(duration: makerAnimationDuration/4.0),
 				 SCNAction.wait(duration: makerAnimationDuration/2.0),

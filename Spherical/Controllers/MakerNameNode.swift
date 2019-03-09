@@ -17,27 +17,27 @@ class MakerNameNode: SCNNode {
 		let constraints = SCNBillboardConstraint()
 		let node = SCNNode()
 		let extrusionDepth : CGFloat = 0.002
-		let makerNameScale = SCNVector3Make(0.2, 0.2, 0.2)
-		self.position = SCNVector3(x: 0, y: 1.5, z: 0)
+		let makerNameScale = SCNVector3Make(0.01, 0.01, 0.001)
+		self.position = SCNVector3(x: 0.5, y: 1.0, z: 1.0)
 
 		let max, min: SCNVector3
-		let tx, ty, tz: Float
+		
+		let text = SCNText(string: makerName, extrusionDepth: extrusionDepth)
+		var font = UIFont(name: "Helvetica", size: 15)
+		text.font = font?.withSize(0.15)
 
-		geometry = SCNText(string: makerName, extrusionDepth: extrusionDepth)
+		geometry = text
 		geometry?.firstMaterial?.diffuse.contents = UIColor.white
 		geometry?.firstMaterial?.specular.contents = UIColor.white
 		
+
 		max = geometry!.boundingBox.max
 		min = geometry!.boundingBox.min
 
-		tx = (max.x - min.x)/2
-		ty = min.y
-		tz = Float(extrusionDepth)/2
-		
 		node.scale = makerNameScale
-		self.center()
+		center()
 		
-		self.addChildNode(node)
+		addChildNode(node)
 		self.constraints = [constraints]
 
 	}
@@ -45,14 +45,17 @@ class MakerNameNode: SCNNode {
 	func setString(text: String) {
 		
 		(geometry as! SCNText).string = text
+		center()
 		
 	}
 	
 	func center() {
 		let (min, max) = self.boundingBox
 		
+		print("min, max = \(min), \(max)")
+		
 		let dx = min.x + 0.5 * (max.x - min.x)
-		let dy = Float(2.0) // min.y + 0.5 * (max.y - min.y)
+		let dy = self.boundingBox.max.y
 		let dz = Float(1.0) // min.z + 0.5 * (max.z - min.z)
 		self.pivot = SCNMatrix4MakeTranslation(dx, dy, dz)
 	}
