@@ -26,6 +26,7 @@
 		38914AF921E7FA520034F83F /* Colors_0.06.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF621E7FA510034F83F /* Colors_0.06.sqlite-wal */; };
 		38914AFA21E7FA520034F83F /* Colors_0.06.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF721E7FA510034F83F /* Colors_0.06.sqlite */; };
 		38914AFB21E7FA520034F83F /* Colors_0.06.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 38914AF821E7FA520034F83F /* Colors_0.06.sqlite-shm */; };
+		38BC9929223645BE00EDE79B /* MakerMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9928223645BE00EDE79B /* MakerMeta.swift */; };
 		38BD9019220647B800D9A7D4 /* SCNTransaction+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BD9018220647B700D9A7D4 /* SCNTransaction+Extras.swift */; };
 		38E02A182192C6D40054ABD4 /* PrimitivesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */; };
 		38F21D0E22138078001F42F5 /* SCNSceneCoreDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F21D0D22138078001F42F5 /* SCNSceneCoreDataSource.swift */; };
@@ -78,6 +79,7 @@
 		38914AF621E7FA510034F83F /* Colors_0.06.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Colors_0.06.sqlite-wal"; sourceTree = "<group>"; };
 		38914AF721E7FA510034F83F /* Colors_0.06.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Colors_0.06.sqlite; sourceTree = "<group>"; };
 		38914AF821E7FA520034F83F /* Colors_0.06.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Colors_0.06.sqlite-shm"; sourceTree = "<group>"; };
+		38BC9928223645BE00EDE79B /* MakerMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MakerMeta.swift; path = Spherical/Models/MakerMeta.swift; sourceTree = SOURCE_ROOT; };
 		38BD9018220647B700D9A7D4 /* SCNTransaction+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SCNTransaction+Extras.swift"; path = "/Users/deirdre/Development/Spherical/Spherical/SCNTransaction+Extras.swift"; sourceTree = "<absolute>"; };
 		38DE739E21EC4D7800DBCF03 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		38E02A172192C6D40054ABD4 /* PrimitivesScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimitivesScene.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		380B3ABF218A918D00EC89E8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				38BC9928223645BE00EDE79B /* MakerMeta.swift */,
 				38914AEF21E7F9E90034F83F /* EyePalette.swift */,
 				38914AEE21E7F9E90034F83F /* Maker.swift */,
 				38914AED21E7F9E80034F83F /* ShadowColor.swift */,
@@ -461,6 +464,7 @@
 				3863AC022182357C00B60381 /* ViewController.swift in Sources */,
 				38F21D0E22138078001F42F5 /* SCNSceneCoreDataSource.swift in Sources */,
 				38914AF121E7F9E90034F83F /* Maker.swift in Sources */,
+				38BC9929223645BE00EDE79B /* MakerMeta.swift in Sources */,
 				3863AC002182357C00B60381 /* AppDelegate.swift in Sources */,
 				385178B7221CC75500F17AF3 /* UILabel+Extras.swift in Sources */,
 				38914AF221E7F9E90034F83F /* EyePalette.swift in Sources */,
@@ -653,7 +657,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.Spherical;
+				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.Spherical2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -677,7 +681,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.Spherical;
+				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.Spherical2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
