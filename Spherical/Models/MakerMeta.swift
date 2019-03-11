@@ -11,7 +11,7 @@ import SceneKit
 
 struct MakerMeta {
 	var maker : Maker
-	var nameNode : SCNNode
+	var mainNode : SCNNode
 	var colorNodes : [SCNNode]
-	var labelColor : UIColor
+	var titleColor : UIColor
 }
