@@ -318,7 +318,7 @@
 				TargetAttributes = {
 					3863ABFB2182357C00B60381 = {
 						CreatedOnToolsVersion = 10.0;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
@@ -327,10 +327,12 @@
 					};
 					3863AC0F2182357E00B60381 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1020;
 						TestTargetID = 3863ABFB2182357C00B60381;
 					};
 					3863AC1A2182357E00B60381 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1020;
 						TestTargetID = 3863ABFB2182357C00B60381;
 					};
 				};
@@ -661,7 +663,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -684,7 +686,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.Spherical2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -705,7 +707,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.SphericalTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spherical.app/Spherical";
 			};
@@ -727,7 +729,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.SphericalTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spherical.app/Spherical";
 			};
@@ -748,7 +750,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.SphericalUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Spherical;
 			};
@@ -769,7 +771,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.deirdre.SphericalUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Spherical;
 			};

@@ -20,10 +20,11 @@ class MakerNameNode: SCNNode {
 		let makerNameScale = SCNVector3Make(0.01, 0.01, 0.001)
 		self.position = SCNVector3(x: 0.5, y: 1.0, z: 1.0)
 
-		let max, min: SCNVector3
+		let max: SCNVector3
+		let min: SCNVector3
 		
 		let text = SCNText(string: makerName, extrusionDepth: extrusionDepth)
-		var font = UIFont(name: "Helvetica", size: 15)
+		let font = UIFont(name: "Helvetica", size: 15)
 		text.font = font?.withSize(0.15)
 
 		geometry = text

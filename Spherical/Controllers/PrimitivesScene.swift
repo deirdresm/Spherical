@@ -49,8 +49,6 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 			print("Could not fetch. \(error), \(error.userInfo)")
 		}
 		
-		print("makers.count = \(makersOrig.count)")
-		
 		for index in 0..<makersOrig.count {
 			let maker = makersOrig[index]
 			if maker.numShadowColors() >= 20 {	// too few items to bother graphing
@@ -62,6 +60,8 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 				makerNode.opacity = 0.0 // start transparent
 				makerNode.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
 				rootNode.addChildNode(makerNode)
+				
+				
 
 				let m = MakerMeta(maker: maker, mainNode: makerNode, colorNodes: [], titleColor: UIColor.white)
 				makerInfo.append(m)
@@ -75,6 +75,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 
 			// find the shadow colors through the palettes relationship
 			// we know there are palettes because we filtered out the ones without
+
 			
 			for palette in (makerInfo[index]).maker.eyePalettes! {
 				for shadow in (palette as! EyePalette).shadows! {
@@ -82,6 +83,7 @@ class PrimitivesScene : SCNScene, SCNSceneRendererDelegate {
 				}
 			}
 			
+			var nsColor = UIColor.white
 		}
 
 		let shadowFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ShadowColor")

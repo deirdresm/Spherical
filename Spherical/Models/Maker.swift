@@ -41,7 +41,7 @@ public class Maker: NSManagedObject {
 	func shadowsByPaletteOrderName() -> NSMutableArray? {
 		
 		let palettes = sortedPalettes()
-		var shadows = (NSMutableArray())
+		let shadows = (NSMutableArray())
 		
 		for palette in palettes {
 			shadows.addObjects(from: palette.sortedShadows())
